@@ -5,10 +5,10 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent){
     lineNumberArea = new LineNumberArea(this);
 
     // Colors
-    setLineNumberAreaColor(Qt::lightGray);
-    setLineNumberTextColor(Qt::black);
-    setLineColor(QColor(Qt::yellow).lighter(160));
-    setBackgroundColor(Qt::darkGray);
+    setLineNumberAreaColor(QColor(49,51,53,255)); // Qt::lightGray
+    setLineNumberTextColor(QColor(130,128,135,255)); // Qt::black
+    setLineColor(QColor(50,50,50,255)); // QColor(Qt::yellow).lighter(160)
+    setBackgroundColor(QColor(43,43,43,255)); //Qt::darkGray
 
     connect(this, &CodeEditor::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
     connect(this, &CodeEditor::updateRequest, this, &CodeEditor::updateLineNumberArea);
