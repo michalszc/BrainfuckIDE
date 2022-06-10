@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     codeeditor.cpp \
+    highlighter.cpp \
     linenumberarea.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     codeeditor.h \
+    highlighter.h \
     linenumberarea.h \
     mainwindow.h
 

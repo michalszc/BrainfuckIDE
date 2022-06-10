@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "codeeditor.h"
+#include "highlighter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private:
+    void setupEditor();
+
 private slots:
     void checkChangeColor(); // only for tests
 
@@ -23,5 +27,6 @@ private:
     Ui::MainWindow *ui;
     QWidget *mainWidget;
     CodeEditor *codeEditor;
+    Highlighter *highlighter;
 };
 #endif // MAINWINDOW_H

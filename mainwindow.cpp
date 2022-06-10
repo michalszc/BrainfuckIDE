@@ -24,7 +24,19 @@ MainWindow::MainWindow(QWidget *parent)
     mainWidget->setMinimumSize(120,100);
     setCentralWidget(mainWidget);
     setWindowTitle("Brainfuck IDE");
-    connect( call_button, SIGNAL( clicked()),this,SLOT( checkChangeColor() ));
+    connect( call_button, SIGNAL( clicked()),this,SLOT( checkChangeColor() ));\
+    setupEditor();
+}
+
+void MainWindow::setupEditor()
+{
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPointSize(14);
+
+    codeEditor->setFont(font);
+    highlighter = new Highlighter(codeEditor->document());
 }
 
 void MainWindow::checkChangeColor(){
