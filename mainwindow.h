@@ -11,6 +11,7 @@
 #include <QFont>
 #include <QFontDialog>
 #include <QDirIterator>
+#include <QLineEdit>
 #include "codeeditor.h"
 
 QT_BEGIN_NAMESPACE
@@ -53,6 +54,9 @@ private:
 
     CodeEditor *codeEditor;
     QString currentFile;
+
+    QLineEdit *input;
+    QTextEdit *output;
 
     // Menu Bar
     QMenu *fileMenu;

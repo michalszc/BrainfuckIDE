@@ -49,13 +49,7 @@ void CodeEditor::setLineColor(QColor newColor){
 }
 void CodeEditor::setBackgroundColor(QColor newColor){
     backgroundColor = newColor;
-
-    QPalette p = this->palette();
-
-    p.setColor(QPalette::Active, QPalette::Base, backgroundColor);
-    p.setColor(QPalette::Inactive, QPalette::Base, backgroundColor);
-
-    setPalette(p);
+    setStyleSheet("QPlainTextEdit{ background-color:"+backgroundColor.name()+"}");
 }
 
 int CodeEditor::lineNumberAreaWidth(){

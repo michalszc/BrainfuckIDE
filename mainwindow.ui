@@ -14,7 +14,13 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true"> QLineEdit , QTextEdit{
+     border: 2px solid rgba(49,51,53,255);
+     border-radius: 10px;
+     padding: 0 8px;
+     background:  rgba(43,43,43,255);
+	color:  rgba(130,128,135,255);
+ }</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -30,16 +36,8 @@
     <string notr="true">QMenuBar {
 	background-color: rgba(60,63,65,255);
  	color:rgba(187,187,187,255);
-     /* spacing: 3px; /* spacing between menu bar items */
 }
-/* 
-QMenuBar::item {
-    padding: 1px 4px;
-    background: transparent;
-    border-radius: 4px;
-}
- */
-QMenuBar::item:selected { /* when selected using mouse or keyboard */
+QMenuBar::item:selected { 
    background: rgba(75,110,175,255);
 }
 
@@ -76,45 +74,7 @@ QMenuBar::item:pressed {
      height: 1px;
      background: rgba(81,81,81,255);
  }
- /*
- QMenu::indicator {
-     width: 13px;
-     height: 13px;
- }
- */
- /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
- QMenu::indicator:non-exclusive:unchecked {
-     image: url(:/images/checkbox_unchecked.png);
- }
-
- QMenu::indicator:non-exclusive:unchecked:selected {
-     image: url(:/images/checkbox_unchecked_hover.png);
- }
-
- QMenu::indicator:non-exclusive:checked {
-     image: url(:/images/checkbox_checked.png);
- }
-
- QMenu::indicator:non-exclusive:checked:selected {
-     image: url(:/images/checkbox_checked_hover.png);
- }
-
- /* exclusive indicator = radio button style indicator (see QActionGroup::setExclusive) */
- QMenu::indicator:exclusive:unchecked {
-     image: url(:/images/radiobutton_unchecked.png);
- }
-
- QMenu::indicator:exclusive:unchecked:selected {
-     image: url(:/images/radiobutton_unchecked_hover.png);
- }
-
- QMenu::indicator:exclusive:checked {
-     image: url(:/images/radiobutton_checked.png);
- }
-
- QMenu::indicator:exclusive:checked:selected {
-     image: url(:/images/radiobutton_checked_hover.png);
- }</string>
+</string>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
