@@ -2,8 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QMessageBox>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QFont>
+#include <QFontDialog>
 #include "codeeditor.h"
-#include "highlighter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,16 +24,59 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+#ifndef QT_NO_CONTEXTMENU
+    void contextMenuEvent(QContextMenuEvent *event) override;
+#endif // QT_NO_CONTEXTMENU
+
 private:
-    void setupEditor();
+    void createActions();
+    void createMenus();
 
 private slots:
-    void checkChangeColor(); // only for tests
+    void newFile();
+    void open();
+    void save();
+    void saveAs();
+    void print();
+//    void undo();
+//    void redo();
+//    void cut();
+//    void copy();
+//    void paste();
+    void about();
+//    void aboutQt();
+
+    // only for tests
+    void checkChangeColor();
 
 private:
     Ui::MainWindow *ui;
     QWidget *mainWidget;
+
     CodeEditor *codeEditor;
-    Highlighter *highlighter;
+    QString currentFile;
+
+    // Menu Bar
+    QMenu *fileMenu;
+    QMenu *editMenu;
+    QMenu *formatMenu;
+    QMenu *helpMenu;
+
+    // Actions
+    QActionGroup *alignmentGroup;
+    QAction *newAct;
+    QAction *openAct;
+    QAction *saveAct;
+    QAction *saveAsAct;
+    QAction *printAct;
+    QAction *exitAct;
+    QAction *undoAct;
+    QAction *redoAct;
+    QAction *cutAct;
+    QAction *copyAct;
+    QAction *pasteAct;
+    QAction *aboutAct;
+    QAction *aboutQtAct;
 };
 #endif // MAINWINDOW_H

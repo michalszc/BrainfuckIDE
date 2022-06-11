@@ -4,15 +4,33 @@
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent){
     lineNumberArea = new LineNumberArea(this);
 
+    connect(this, &CodeEditor::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
+    connect(this, &CodeEditor::updateRequest, this, &CodeEditor::updateLineNumberArea);
+    connect(this, &CodeEditor::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
+
+    setup();
+
+}
+
+void CodeEditor::setup()
+{
+    setFrameStyle(QFrame::NoFrame);
+
     // Colors
     setLineNumberAreaColor(QColor(49,51,53,255)); // Qt::lightGray
     setLineNumberTextColor(QColor(130,128,135,255)); // Qt::black
     setLineColor(QColor(50,50,50,255)); // QColor(Qt::yellow).lighter(160)
     setBackgroundColor(QColor(43,43,43,255)); //Qt::darkGray
 
-    connect(this, &CodeEditor::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
-    connect(this, &CodeEditor::updateRequest, this, &CodeEditor::updateLineNumberArea);
-    connect(this, &CodeEditor::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
+    // Font
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPointSize(14);
+    setFont(font);
+
+    // Syntax highlighting
+    highlighter = new Highlighter(document());
 
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();

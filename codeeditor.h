@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QTextBlock>
 #include <QVBoxLayout>
-
+#include "highlighter.h"
 
 class CodeEditor: public QPlainTextEdit
 {
@@ -25,6 +25,9 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
+private:
+    void setup();
+
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
@@ -36,6 +39,7 @@ private:
     QColor lineNumberTextColor;
     QColor lineColor;
     QColor backgroundColor;
+    Highlighter *highlighter;
 };
 
 #endif // CODEEDITOR_H

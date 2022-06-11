@@ -13,8 +13,110 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+	background-color: rgba(60,63,65,255);
+ 	color:rgba(187,187,187,255);
+     /* spacing: 3px; /* spacing between menu bar items */
+}
+/* 
+QMenuBar::item {
+    padding: 1px 4px;
+    background: transparent;
+    border-radius: 4px;
+}
+ */
+QMenuBar::item:selected { /* when selected using mouse or keyboard */
+   background: rgba(75,110,175,255);
+}
+
+QMenuBar::item:pressed {
+   background: rgba(75,110,175,255);
+}
+
+ QMenu {
+     background-color: rgba(60,63,65,255);
+	 color:rgba(187,187,187,255);
+     margin: 2px 0; 
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 1px solid transparent;
+ }
+
+ QMenu::item:selected { 
+     background: rgba(75,110,175,255);
+ }
+
+ QMenu::icon:checked {
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 1px;
+     right: 1px;
+     bottom: 1px;
+     left: 1px;
+ }
+
+ QMenu::separator {
+     height: 1px;
+     background: rgba(81,81,81,255);
+ }
+ /*
+ QMenu::indicator {
+     width: 13px;
+     height: 13px;
+ }
+ */
+ /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
+ QMenu::indicator:non-exclusive:unchecked {
+     image: url(:/images/checkbox_unchecked.png);
+ }
+
+ QMenu::indicator:non-exclusive:unchecked:selected {
+     image: url(:/images/checkbox_unchecked_hover.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked {
+     image: url(:/images/checkbox_checked.png);
+ }
+
+ QMenu::indicator:non-exclusive:checked:selected {
+     image: url(:/images/checkbox_checked_hover.png);
+ }
+
+ /* exclusive indicator = radio button style indicator (see QActionGroup::setExclusive) */
+ QMenu::indicator:exclusive:unchecked {
+     image: url(:/images/radiobutton_unchecked.png);
+ }
+
+ QMenu::indicator:exclusive:unchecked:selected {
+     image: url(:/images/radiobutton_unchecked_hover.png);
+ }
+
+ QMenu::indicator:exclusive:checked {
+     image: url(:/images/radiobutton_checked.png);
+ }
+
+ QMenu::indicator:exclusive:checked:selected {
+     image: url(:/images/radiobutton_checked_hover.png);
+ }</string>
+   </property>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
