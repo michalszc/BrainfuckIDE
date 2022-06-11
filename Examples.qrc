@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/examples">
+        <file>examples/Hello world.bf</file>
+        <file>examples/Sierpinski triangle.bf</file>
+    </qresource>
+</RCC>

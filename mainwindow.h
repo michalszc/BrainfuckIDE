@@ -10,6 +10,7 @@
 #include <QPrintDialog>
 #include <QFont>
 #include <QFontDialog>
+#include <QDirIterator>
 #include "codeeditor.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,13 +40,9 @@ private slots:
     void save();
     void saveAs();
     void print();
-//    void undo();
-//    void redo();
-//    void cut();
-//    void copy();
-//    void paste();
+    void run();
+    void openExample(QString fileName);
     void about();
-//    void aboutQt();
 
     // only for tests
     void checkChangeColor();
@@ -60,11 +57,11 @@ private:
     // Menu Bar
     QMenu *fileMenu;
     QMenu *editMenu;
-    QMenu *formatMenu;
+    QMenu *codeMenu;
+    QMenu *examplesMenu;
     QMenu *helpMenu;
 
     // Actions
-    QActionGroup *alignmentGroup;
     QAction *newAct;
     QAction *openAct;
     QAction *saveAct;
@@ -76,6 +73,8 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+    QAction *runAct;
+    QVector<QAction*> examplesAct;
     QAction *aboutAct;
     QAction *aboutQtAct;
 };

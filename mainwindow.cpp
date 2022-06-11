@@ -114,11 +114,30 @@ void MainWindow::createActions()
     pasteAct->setStatusTip("Paste the clipboard's contents into the current selection");
     connect(pasteAct, &QAction::triggered, codeEditor, &QPlainTextEdit::paste);
 
-    aboutAct = new QAction(tr("&About"), this);
+    runAct = new QAction("Run", this);
+    runAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F10));
+    runAct->setStatusTip(tr("Run the brainfuck file"));
+    connect(runAct, &QAction::triggered, this, &MainWindow::run);
+
+    QDirIterator it(":/examples", QDirIterator::Subdirectories);
+    it.next();
+    QAction *tmpAct;
+    while (it.hasNext()) {
+        QString path = it.next();
+        QString fileName = path.mid(path.lastIndexOf("/")+1);
+        fileName = fileName.mid(0, fileName.lastIndexOf("."));
+        tmpAct = new QAction(fileName,this);
+        tmpAct->setStatusTip("Open "+fileName+" example");
+        connect(tmpAct, &QAction::triggered, this, [this, path]{ openExample(path); });
+        examplesAct.push_back(tmpAct);
+    }
+
+
+    aboutAct = new QAction("About", this);
     aboutAct->setStatusTip(tr("Show the application's About box"));
     connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
 
-    aboutQtAct = new QAction(tr("About &Qt"), this);
+    aboutQtAct = new QAction("About Qt", this);
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     connect(aboutQtAct, &QAction::triggered, qApp, &QApplication::aboutQt);
 
@@ -147,6 +166,14 @@ void MainWindow::createMenus()
     editMenu->addAction(copyAct);
     editMenu->addAction(pasteAct);
     editMenu->addSeparator();
+
+    codeMenu = menuBar()->addMenu("Code");
+    codeMenu->addAction(runAct);
+
+    examplesMenu = codeMenu->addMenu("Examples");
+    for(QAction *act: examplesAct){
+        examplesMenu->addAction(act);
+    }
 
     helpMenu = menuBar()->addMenu("Help");
     helpMenu->addAction(aboutAct);
@@ -223,6 +250,24 @@ void MainWindow::print(){
     if( dialog.exec() == QDialog::Rejected)
         return;
     codeEditor->print(&printer);
+}
+
+void MainWindow::run(){
+    qDebug() << "run";
+}
+
+void MainWindow::openExample(QString fileName){
+    QFile file(fileName);
+    currentFile = fileName;
+    if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
+        return;
+    }
+    setWindowTitle("Brainfuck IDE - " + fileName.mid(fileName.lastIndexOf("/")+1));
+    QTextStream in(&file);
+    QString text = in.readAll();
+    codeEditor->setPlainText(text);
+    file.close();
 }
 
 void MainWindow::about(){
