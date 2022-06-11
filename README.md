@@ -1,1 +1,1 @@
-# Brainfuck-IDE
+# Brainfuck IDE
