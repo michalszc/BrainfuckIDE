@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     output = new QTextEdit;
     output->setPlaceholderText("Output");
     output->setFont(font);
-    output->setFixedHeight( output->fontMetrics().height() * 6);
+    output->setFixedHeight( output->fontMetrics().height() * 10);
     output->setReadOnly(true);
 
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -274,7 +274,7 @@ void MainWindow::print(){
 }
 
 void MainWindow::run(){
-    qDebug() << "run";
+    Interpreter(codeEditor->toPlainText().toStdString(),input->text().toStdString(), output).run();
 }
 
 void MainWindow::openExample(QString fileName){

@@ -13,6 +13,7 @@
 #include <QDirIterator>
 #include <QLineEdit>
 #include "codeeditor.h"
+#include "Interpreter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

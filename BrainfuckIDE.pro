@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Controller.cpp \
+    Interpreter.cpp \
     codeeditor.cpp \
     highlighter.cpp \
     linenumberarea.cpp \
@@ -16,6 +18,20 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    BeginLoop.h \
+    Brainfuck.h \
+    Controller.h \
+    EndLoop.h \
+    Input.h \
+    Instruction.h \
+    Interpreter.h \
+    Memory.h \
+    Minus.h \
+    MoveLeft.h \
+    MoveRight.h \
+    Output.h \
+    Plus.h \
+    RangeError.h \
     codeeditor.h \
     highlighter.h \
     linenumberarea.h \
