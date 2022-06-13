@@ -2,5 +2,11 @@
     <qresource prefix="/examples">
         <file>examples/Hello world.bf</file>
         <file>examples/Sierpinski triangle.bf</file>
+        <file>examples/Bubble Sort.bf</file>
+        <file>examples/Insertion Sort.bf</file>
+        <file>examples/Numwarp.bf</file>
+        <file>examples/Quick sort.bf</file>
+        <file>examples/ROT13.bf</file>
+        <file>examples/Square Numbers.bf</file>
     </qresource>
 </RCC>
