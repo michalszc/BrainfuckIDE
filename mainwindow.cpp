@@ -274,6 +274,7 @@ void MainWindow::print(){
 }
 
 void MainWindow::run(){
+    output->setText("");
     Interpreter(codeEditor->toPlainText().toStdString(),input->text().toStdString(), output).run();
 }
 
