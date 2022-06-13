@@ -275,7 +275,7 @@ void MainWindow::print(){
 
 void MainWindow::run(){
     output->setText("");
-    Interpreter(codeEditor->toPlainText().toStdString(),input->text().toStdString(), output).run();
+    Interpreter(codeEditor->toPlainText().toStdString(),input->text().toStdString(), output);
 }
 
 void MainWindow::openExample(QString fileName){

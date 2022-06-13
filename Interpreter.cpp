@@ -8,7 +8,10 @@ Interpreter::Interpreter(const std::string &code, const std::string& inputText, 
         checkCode(code);
         run();
     }catch(std::exception& e){
-        qDebug() << "Error: " << e.what();
+        QColor prev = output->textColor();
+        output->setTextColor(Qt::red);
+        output->setText(QString("Error: ")+QString(e.what()));
+        output->setTextColor(prev);
     }
 }
 
