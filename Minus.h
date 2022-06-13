@@ -4,8 +4,6 @@
 
 class Minus:public Instruction{ // -
 public:
-    __attribute__((unused)) void asd(){}
-    void setIndex(__attribute__((unused)) const std::size_t& index) override {};
     void execute (Controller& controller) override { controller.memory.decrement_value(); }
 };
 

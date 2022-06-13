@@ -8,7 +8,7 @@
 class Instruction{
 public:
     virtual void execute(Controller& controller) = 0;
-    virtual void setIndex(const std::size_t& index) = 0;
+    virtual void setIndex(__attribute__((unused)) const std::size_t& index){};
     virtual ~Instruction() = default;
 };
 

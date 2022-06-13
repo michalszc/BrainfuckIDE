@@ -4,7 +4,6 @@
 
 class Plus:public Instruction{ // +
 public:
-    void setIndex(__attribute__((unused)) const std::size_t& index) override {};
     void execute (Controller& controller) override { controller.memory.increment_value(); }
 };
 
