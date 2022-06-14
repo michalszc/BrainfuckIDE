@@ -14,6 +14,7 @@
 #include <QLineEdit>
 #include "codeeditor.h"
 #include "Interpreter.h"
+#include "QtAwesome.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,7 +27,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 protected:
 #ifndef QT_NO_CONTEXTMENU
     void contextMenuEvent(QContextMenuEvent *event) override;
@@ -58,6 +58,9 @@ private:
 
     QLineEdit *input;
     QTextEdit *output;
+
+    //FontAwesome
+    QtAwesome* awesome;
 
     // Menu Bar
     QMenu *fileMenu;

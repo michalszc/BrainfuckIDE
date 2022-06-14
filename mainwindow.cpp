@@ -10,6 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    awesome = new QtAwesome( qApp );
+    awesome->initFontAwesome();
+
+    QVariantMap options;
+    options.insert( "color" , QColor(187,187,187) );
+    setWindowIcon(awesome->icon(fa::code, options).pixmap(256,256));
+
     currentFile = "";
     codeEditor = new CodeEditor;
 
@@ -80,19 +88,28 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 
 void MainWindow::createActions()
 {
+    QVariantMap options;
+    options.insert( "color" , QColor(187,187,187) );
+
     newAct = new QAction("New", this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip("Create a new file");
+    newAct->setIcon(awesome->icon(fa::file, options).pixmap(32,32));
+    newAct->setIconVisibleInMenu(true);
     connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
 
     openAct = new QAction("Open...", this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip("Open an existing file");
+    openAct->setIcon(awesome->icon(fa::folderopen, options).pixmap(32,32));
+    openAct->setIconVisibleInMenu(true);
     connect(openAct, &QAction::triggered, this, &MainWindow::open);
 
     saveAct = new QAction("Save", this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip("Save the document to disk");
+    saveAct->setIcon(awesome->icon(fa::save, options).pixmap(32,32));
+    saveAct->setIconVisibleInMenu(true);
     connect(saveAct, &QAction::triggered, this, &MainWindow::save);
 
     saveAsAct = new QAction("Save as...", this);
@@ -103,41 +120,57 @@ void MainWindow::createActions()
     printAct = new QAction("Print...", this);
     printAct->setShortcuts(QKeySequence::Print);
     printAct->setStatusTip("Print the document");
+    printAct->setIcon(awesome->icon(fa::print, options).pixmap(32,32));
+    printAct->setIconVisibleInMenu(true);
     connect(printAct, &QAction::triggered, this, &MainWindow::print);
 
     exitAct = new QAction("Exit", this);
     exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip("Exit the application");
+    exitAct->setIcon(awesome->icon(fa::windowclose, options).pixmap(32,32));
+    exitAct->setIconVisibleInMenu(true);
     connect(exitAct, &QAction::triggered, this, &QWidget::close);
 
     undoAct = new QAction("Undo", this);
     undoAct->setShortcuts(QKeySequence::Undo);
     undoAct->setStatusTip("Undo the last operation");
+    undoAct->setIcon(awesome->icon(fa::undo, options).pixmap(32,32));
+    undoAct->setIconVisibleInMenu(true);
     connect(undoAct, &QAction::triggered, codeEditor, &QPlainTextEdit::undo);
 
     redoAct = new QAction("Redo", this);
     redoAct->setShortcuts(QKeySequence::Redo);
     redoAct->setStatusTip("Redo the last operation");
+    redoAct->setIcon(awesome->icon(fa::undo, options).pixmap(32,32).transformed(QTransform().scale(-1, 1)));
+    redoAct->setIconVisibleInMenu(true);
     connect(redoAct, &QAction::triggered, codeEditor, &QPlainTextEdit::redo);
 
     cutAct = new QAction("Cut", this);
     cutAct->setShortcuts(QKeySequence::Cut);
     cutAct->setStatusTip("Cut the current selection's contents to the clipboard");
+    cutAct->setIcon(awesome->icon(fa::cut, options).pixmap(32,32));
+    cutAct->setIconVisibleInMenu(true);
     connect(cutAct, &QAction::triggered, codeEditor, &QPlainTextEdit::cut);
 
     copyAct = new QAction("Copy", this);
     copyAct->setShortcuts(QKeySequence::Copy);
     copyAct->setStatusTip("Copy the current selection's contents to the clipboard");
+    copyAct->setIcon(awesome->icon(fa::copy, options).pixmap(32,32));
+    copyAct->setIconVisibleInMenu(true);
     connect(copyAct, &QAction::triggered, codeEditor, &QPlainTextEdit::copy);
 
     pasteAct = new QAction("Paste", this);
     pasteAct->setShortcuts(QKeySequence::Paste);
     pasteAct->setStatusTip("Paste the clipboard's contents into the current selection");
+    pasteAct->setIcon(awesome->icon(fa::paste, options).pixmap(32,32));
+    pasteAct->setIconVisibleInMenu(true);
     connect(pasteAct, &QAction::triggered, codeEditor, &QPlainTextEdit::paste);
 
     runAct = new QAction("Run", this);
     runAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F10));
     runAct->setStatusTip(tr("Run the brainfuck file"));
+    runAct->setIcon(awesome->icon(fa::play, options).pixmap(32,32));
+    runAct->setIconVisibleInMenu(true);
     connect(runAct, &QAction::triggered, this, &MainWindow::run);
 
     QDirIterator it(":/examples", QDirIterator::Subdirectories);

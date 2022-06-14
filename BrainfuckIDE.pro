@@ -47,3 +47,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Examples.qrc
+
+include(QtAwesome/QtAwesome.pri)
