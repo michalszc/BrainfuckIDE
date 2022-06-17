@@ -5,7 +5,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 {
     HighlightingRule rule;
 
-    changeValueFormat.setForeground(Qt::red);
+    changeValueFormat.setForeground(Qt::cyan); //Qt::red
     const QString changeValuePatterns[] = {
         QStringLiteral("\\+"),
         QStringLiteral("-")
@@ -16,7 +16,7 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    movingPointerFormat.setForeground(Qt::green);
+    movingPointerFormat.setForeground(QColor(238,110,101,255)); //Qt::green
     const QString movingPointerPatterns[] = {
         QStringLiteral("<"),
         QStringLiteral(">")
@@ -27,7 +27,7 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    loopFormat.setForeground(Qt::cyan);
+    loopFormat.setForeground(QColor(173,186,199,255)); // Qt::cyan
     const QString loopPatterns[] = {
         QStringLiteral("\\["),
         QStringLiteral("]")
@@ -38,12 +38,12 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    readFormat.setForeground(Qt::darkYellow); // orange
+    readFormat.setForeground(Qt::darkMagenta); // orange // Qt::darkYellow
     rule.pattern = QRegularExpression(QStringLiteral(","));
     rule.format = readFormat;
     highlightingRules.append(rule);
 
-    inputFormat.setForeground(Qt::yellow);
+    inputFormat.setForeground(Qt::darkYellow); // Qt::yellow
     rule.pattern = QRegularExpression(QStringLiteral("\\."));
     rule.format = inputFormat;
     highlightingRules.append(rule);
@@ -57,7 +57,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     commentFormat.setForeground(Qt::darkGray);
     commentFormat.setFont(commentFont);
-    rule.pattern = QRegularExpression(QStringLiteral("[^\\+-<>,\\.\\[\\]]"));
+    rule.pattern = QRegularExpression(QStringLiteral("([^\\+-<>,\\.\\[\\]]|[0-9])"));
     rule.format = commentFormat;
     highlightingRules.append(rule);
 }
