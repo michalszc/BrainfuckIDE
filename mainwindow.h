@@ -81,6 +81,7 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+    QAction *selectAllAct;
     QAction *runAct;
     QVector<QAction*> examplesAct;
     QAction *aboutAct;

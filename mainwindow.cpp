@@ -167,6 +167,12 @@ void MainWindow::createActions()
     pasteAct->setIconVisibleInMenu(true);
     connect(pasteAct, &QAction::triggered, codeEditor, &QPlainTextEdit::paste);
 
+    selectAllAct = new QAction("Paste", this);
+    selectAllAct->setShortcuts(QKeySequence::SelectAll);
+    selectAllAct->setStatusTip("Select all from the current file");
+    selectAllAct->setIconVisibleInMenu(true);
+    connect(selectAllAct, &QAction::triggered, codeEditor, &QPlainTextEdit::selectAll);
+
     runAct = new QAction("Run", this);
     runAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F10));
     runAct->setStatusTip(tr("Run the brainfuck file"));
@@ -202,15 +208,11 @@ void MainWindow::createMenus()
 {
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(newAct);
-
     fileMenu->addAction(openAct);
-
     fileMenu->addAction(saveAct);
     fileMenu->addAction(saveAsAct);
     fileMenu->addAction(printAct);
-
     fileMenu->addSeparator();
-
     fileMenu->addAction(exitAct);
 
     editMenu = menuBar()->addMenu("Edit");
@@ -221,6 +223,7 @@ void MainWindow::createMenus()
     editMenu->addAction(copyAct);
     editMenu->addAction(pasteAct);
     editMenu->addSeparator();
+    editMenu->addAction(selectAllAct);
 
     codeMenu = menuBar()->addMenu("Code");
     codeMenu->addAction(runAct);
