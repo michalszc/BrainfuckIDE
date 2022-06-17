@@ -24,6 +24,7 @@ private:
     std::string code_;
     instructions_t instructions;
     Controller controller;
+    int executeInstructions{};
 public:
     explicit Interpreter(const std::string& code, const std::string& inputText, QTextEdit *output);
     void checkCode(const std::string &code);

@@ -3,10 +3,17 @@
 
 Interpreter::Interpreter(const std::string &code, const std::string& inputText, QTextEdit *output) {
     try{
+        clock_t start, end;
+        start = clock();
         controller.setOutput(output);
         setInput(inputText);
         checkCode(code);
         run();
+        end = clock();
+        double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+        output->insertPlainText(
+                QString("\n\nProcess finished: executed ")+QString::number(executeInstructions)+QString(" instructions")+
+                QString("\nTime taken: ")+QString::number(time_taken,'f',3)+QString(" sec"));
     }catch(std::exception& e){
         QColor prev = output->textColor();
         output->setTextColor(Qt::red);
@@ -68,10 +75,12 @@ void Interpreter::checkCode(const std::string &code) {
 }
 
 void Interpreter::run() {
+    executeInstructions=0;
     size_t i = controller.getInstructionIndex();
     while(i < instructions.size()){
         instructions[i]->execute(controller);
         controller.IncrementInstructionIndex();
         i = controller.getInstructionIndex();
+        ++executeInstructions;
     }
 }
