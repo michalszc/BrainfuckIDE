@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
                  QPushButton::hover{color:black}");
 
     QFont font;
-    font.setFamily("Courier");
+    font.setFamily("Cascadia Mono");
     font.setFixedPitch(true);
     font.setPointSize(12);
 
@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     output = new QTextEdit;
     output->setPlaceholderText("Output");
     output->setFont(font);
+    output->setTextColor(QColor(166,175,161,255));
     output->setFixedHeight( output->fontMetrics().height() * 10);
     output->setReadOnly(true);
 

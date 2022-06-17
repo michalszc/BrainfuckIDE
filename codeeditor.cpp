@@ -24,7 +24,7 @@ void CodeEditor::setup()
 
     // Font
     QFont font;
-    font.setFamily("Courier");
+    font.setFamily("Cascadia Mono");
     font.setFixedPitch(true);
     font.setPointSize(14);
     setFont(font);
