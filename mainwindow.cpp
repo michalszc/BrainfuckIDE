@@ -80,9 +80,13 @@ MainWindow::~MainWindow()
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
+    menu.addAction(undoAct);
+    menu.addSeparator();
     menu.addAction(cutAct);
     menu.addAction(copyAct);
     menu.addAction(pasteAct);
+    menu.addSeparator();
+    menu.addAction(selectAllAct);
     menu.exec(event->globalPos());
 }
 #endif // QT_NO_CONTEXTMENU
@@ -331,5 +335,6 @@ void MainWindow::openExample(QString fileName){
 
 void MainWindow::about(){
     QMessageBox::about(this, "About Brainfuck IDE",
-    "The <b>Brainfuck IDE</b> ... ");
+    "<b>Brainfuck IDE</b> is a code editor that allows you to write and execute <b>Brainfuck</b> code."
+    " It's perfect for anybody who just wants to quickly write and run some code on their computer. ");
 }
