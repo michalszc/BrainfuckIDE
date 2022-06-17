@@ -57,7 +57,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     commentFormat.setForeground(Qt::darkGray);
     commentFormat.setFont(commentFont);
-    rule.pattern = QRegularExpression(QStringLiteral("([^\\+-<>,\\.\\[\\]]|[0-9])"));
+    rule.pattern = QRegularExpression(QStringLiteral("([^\\+-<>,\\.\\[\\]]|[0-9:/])"));
     rule.format = commentFormat;
     highlightingRules.append(rule);
 }
