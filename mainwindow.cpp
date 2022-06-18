@@ -277,9 +277,10 @@ void MainWindow::open(){
 }
 
 void MainWindow::openSettings(){
-    Settings s(this);
+    Settings s(awesome,this);
     s.setModal(true);
-    s.exec();
+    if ( s.exec() == QDialog::Accepted )
+        qDebug() << "OK";
 }
 
 void MainWindow::save(){
