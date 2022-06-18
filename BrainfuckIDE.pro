@@ -15,7 +15,8 @@ SOURCES += \
     highlighter.cpp \
     linenumberarea.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    settings.cpp
 
 HEADERS += \
     BeginLoop.h \
@@ -35,10 +36,12 @@ HEADERS += \
     codeeditor.h \
     highlighter.h \
     linenumberarea.h \
-    mainwindow.h
+    mainwindow.h \
+    settings.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    settings.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

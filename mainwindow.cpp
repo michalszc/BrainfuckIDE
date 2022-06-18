@@ -110,6 +110,12 @@ void MainWindow::createActions()
     openAct->setIconVisibleInMenu(true);
     connect(openAct, &QAction::triggered, this, &MainWindow::open);
 
+    settingsAct = new QAction("Settings", this);
+    settingsAct->setStatusTip("Open settings");
+    settingsAct->setIcon(awesome->icon(fa::wrench, options).pixmap(32,32));
+    settingsAct->setIconVisibleInMenu(true);
+    connect(settingsAct, &QAction::triggered, this, &MainWindow::openSettings);
+
     saveAct = new QAction("Save", this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip("Save the document to disk");
@@ -213,6 +219,9 @@ void MainWindow::createMenus()
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(settingsAct);
+    fileMenu->addSeparator();
     fileMenu->addAction(saveAct);
     fileMenu->addAction(saveAsAct);
     fileMenu->addAction(printAct);
@@ -265,6 +274,12 @@ void MainWindow::open(){
     QString text = in.readAll();
     codeEditor->setPlainText(text);
     file.close();
+}
+
+void MainWindow::openSettings(){
+    Settings s(this);
+    s.setModal(true);
+    s.exec();
 }
 
 void MainWindow::save(){

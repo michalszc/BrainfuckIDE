@@ -15,6 +15,7 @@
 #include "codeeditor.h"
 #include "Interpreter.h"
 #include "QtAwesome.h"
+#include "settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,6 +40,7 @@ private:
 private slots:
     void newFile();
     void open();
+    void openSettings();
     void save();
     void saveAs();
     void print();
@@ -72,6 +74,7 @@ private:
     // Actions
     QAction *newAct;
     QAction *openAct;
+    QAction *settingsAct;
     QAction *saveAct;
     QAction *saveAsAct;
     QAction *printAct;
