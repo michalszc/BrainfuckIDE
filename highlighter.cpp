@@ -5,7 +5,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 {
     HighlightingRule rule;
 
-    changeValueFormat.setForeground(Qt::cyan); //Qt::red
+    changeValueFormat.setForeground(QColor(14, 184, 190,255)); //Qt::red
     const QString changeValuePatterns[] = {
         QStringLiteral("\\+"),
         QStringLiteral("-")
@@ -38,12 +38,12 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    readFormat.setForeground(Qt::darkMagenta); // orange // Qt::darkYellow
+    readFormat.setForeground(QColor(255,165,0,255)); // orange // Qt::darkYellow
     rule.pattern = QRegularExpression(QStringLiteral(","));
     rule.format = readFormat;
     highlightingRules.append(rule);
 
-    inputFormat.setForeground(Qt::darkYellow); // Qt::yellow
+    inputFormat.setForeground(Qt::yellow); // Qt::yellow
     rule.pattern = QRegularExpression(QStringLiteral("\\."));
     rule.format = inputFormat;
     highlightingRules.append(rule);

@@ -21,11 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     currentFile = "";
     codeEditor = new CodeEditor;
 
-    QPushButton *call_button = new QPushButton(this);
-    call_button->setText("Make a Call");
-    call_button->setStyleSheet(
-                "QPushButton{background-color:red;color:white}\
-                 QPushButton::hover{color:black}");
+//    QPushButton *call_button = new QPushButton(this);
+//    call_button->setText("Make a Call");
+//    call_button->setStyleSheet( "QPushButton{background-color:red;color:white} QPushButton::hover{color:black}");
 
     QFont font;
     font.setFamily("Cascadia Mono");
@@ -47,14 +45,14 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(codeEditor);
     mainLayout->addWidget(input);
     mainLayout->addWidget(output);
-    mainLayout->addWidget(call_button);
+//    mainLayout->addWidget(call_button);
 
     mainWidget = new QWidget();
     mainWidget->setLayout(mainLayout);
     mainWidget->setMinimumSize(120,100);
     setCentralWidget(mainWidget);
     setWindowTitle("Brainfuck IDE");
-    connect( call_button, SIGNAL( clicked()),this,SLOT( checkChangeColor() ));
+//    connect( call_button, SIGNAL( clicked()),this,SLOT( checkChangeColor() ));
     setAutoFillBackground(true);
     setPalette(QColor(43,43,43,255));
     createActions();
