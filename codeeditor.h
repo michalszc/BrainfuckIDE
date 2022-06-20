@@ -22,6 +22,11 @@ public:
     void setLineColor(QColor newColor);
     void setBackgroundColor(QColor newColor);
 
+    QColor getLineNumberAreaColor() { return lineNumberAreaColor; }
+    QColor getLineNumberTextColor() { return  lineNumberTextColor; }
+    QColor getLineColor() { return lineColor; }
+    QColor getBackgroundColor() { return backgroundColor; }
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

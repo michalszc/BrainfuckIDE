@@ -21,10 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
     currentFile = "";
     codeEditor = new CodeEditor;
 
-//    QPushButton *call_button = new QPushButton(this);
-//    call_button->setText("Make a Call");
-//    call_button->setStyleSheet( "QPushButton{background-color:red;color:white} QPushButton::hover{color:black}");
-
     QFont font;
     font.setFamily("Cascadia Mono");
     font.setFixedPitch(true);
@@ -33,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     input = new QLineEdit;
     input->setPlaceholderText("Input");
     input->setFont(font);
+
+    inpbackgroundColor = QColor(43,43,43,255);
+    inptextColor = QColor(130,128,135,255);
 
     output = new QTextEdit;
     output->setPlaceholderText("Output");
@@ -45,28 +44,17 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(codeEditor);
     mainLayout->addWidget(input);
     mainLayout->addWidget(output);
-//    mainLayout->addWidget(call_button);
 
     mainWidget = new QWidget();
     mainWidget->setLayout(mainLayout);
     mainWidget->setMinimumSize(120,100);
     setCentralWidget(mainWidget);
     setWindowTitle("Brainfuck IDE");
-//    connect( call_button, SIGNAL( clicked()),this,SLOT( checkChangeColor() ));
     setAutoFillBackground(true);
     setPalette(QColor(43,43,43,255));
+    setWindowState(Qt::WindowMaximized);
     createActions();
     createMenus();
-}
-
-void MainWindow::checkChangeColor(){
-    codeEditor->setLineColor(Qt::gray);
-    codeEditor->cursorPositionChanged();
-    codeEditor->setLineNumberAreaColor(Qt::black);
-    codeEditor->setBackgroundColor(Qt::yellow);
-    codeEditor->setLineNumberTextColor(Qt::yellow);
-    codeEditor->setFocus();
-    output->setText("asdasd");
 }
 
 MainWindow::~MainWindow()
@@ -275,10 +263,46 @@ void MainWindow::open(){
 }
 
 void MainWindow::openSettings(){
-    Settings s(awesome,this);
+    const QColor colors[] = {
+        palette().color(QWidget::backgroundRole()), // IDE background color
+        codeEditor->getBackgroundColor(), // Editor background color
+        codeEditor->getLineNumberAreaColor(), // Editor sidebar color
+        codeEditor->getLineNumberTextColor(), // Editor line numbers color
+        codeEditor->getLineColor(), // Editor current line color
+        inpbackgroundColor, // Input & Output background color
+        inptextColor, // Input & Output text color
+        QColor(238,110,101,255), // <>
+        QColor(255,165,0,255), // ,
+        Qt::yellow,// .
+        QColor(14, 184, 190,255),// + -
+        QColor(173,186,199,255), // []
+        Qt::darkGray// comment
+    };
+    Settings s(awesome,colors, codeEditor->font(), this);
     s.setModal(true);
-    if ( s.exec() == QDialog::Accepted )
-        qDebug() << "OK";
+    if ( s.exec() == QDialog::Accepted ){
+        QFont font = s.getFont();
+        codeEditor->setFont(font);
+        input->setFont(font);
+        output->setFont(font);
+        std::vector<QColor> colors = s.getColors();
+
+        setPalette(colors[0]);
+
+        codeEditor->setBackgroundColor(colors[1]);
+
+        codeEditor->setLineNumberAreaColor(colors[2]);
+
+        codeEditor->setLineNumberTextColor(colors[3]);
+
+        codeEditor->setLineColor(colors[4]);
+        codeEditor->cursorPositionChanged();
+
+        inpbackgroundColor = colors[5];
+        inptextColor = colors[6];
+        input->setStyleSheet("background:"+QString(colors[5].name())+";color:"+QString(colors[6].name()));
+        output->setStyleSheet("background:"+QString(colors[5].name())+";color:"+QString(colors[6].name()));
+    }
 }
 
 void MainWindow::save(){

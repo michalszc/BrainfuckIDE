@@ -13,6 +13,35 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QListWidget{
+	background-color: rgba(49,51,53,255);
+	border: 1px solid rgba(164,164,164,255);
+	color: rgba(101,103,96,255);
+	border-radius: 4px;
+}
+
+QListWidget::item:selected { 
+	background-color: rgba(58, 62, 66, 255);
+	color: rgba(172, 175, 163, 255);
+	border: none; 
+}
+QPushButton{
+	background-color: rgba(60,63,65,255);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: rgba(49,51,53,255);
+    font:  bold 12px;
+    min-width: 3em;
+    padding: 6px;
+	color: rgba(130,128,135,255);
+}
+QPushButton :pressed {
+    background-color: rgba(43,43,43,255);
+    border-style: inset;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

@@ -48,9 +48,6 @@ private slots:
     void openExample(QString fileName);
     void about();
 
-    // only for tests
-    void checkChangeColor();
-
 private:
     Ui::MainWindow *ui;
     QWidget *mainWidget;
@@ -60,6 +57,8 @@ private:
 
     QLineEdit *input;
     QTextEdit *output;
+    QColor inpbackgroundColor;
+    QColor inptextColor;
 
     //FontAwesome
     QtAwesome* awesome;
