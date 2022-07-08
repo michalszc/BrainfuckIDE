@@ -4,49 +4,49 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+TARGET = BrainfuckIDE
+TEMPLATE = app
+SUBDIRS += ui
+DESTDIR = bin
+OBJECTS_DIR = build
+MOC_DIR = build
+UI_DIR = build
+INCLUDEPATH += src
 
 SOURCES += \
-    Controller.cpp \
-    Interpreter.cpp \
-    codeeditor.cpp \
-    highlighter.cpp \
-    linenumberarea.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    settings.cpp
+    src/Controller.cpp \
+    src/Interpreter.cpp \
+    src/codeeditor.cpp \
+    src/highlighter.cpp \
+    src/linenumberarea.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/settings.cpp
 
 HEADERS += \
-    BeginLoop.h \
-    Brainfuck.h \
-    Controller.h \
-    EndLoop.h \
-    Input.h \
-    Instruction.h \
-    Interpreter.h \
-    Memory.h \
-    Minus.h \
-    MoveLeft.h \
-    MoveRight.h \
-    Output.h \
-    Plus.h \
-    RangeError.h \
-    codeeditor.h \
-    highlighter.h \
-    linenumberarea.h \
-    mainwindow.h \
-    settings.h
+    src/BeginLoop.h \
+    src/Brainfuck.h \
+    src/Controller.h \
+    src/EndLoop.h \
+    src/Input.h \
+    src/Instruction.h \
+    src/Interpreter.h \
+    src/Memory.h \
+    src/Minus.h \
+    src/MoveLeft.h \
+    src/MoveRight.h \
+    src/Output.h \
+    src/Plus.h \
+    src/RangeError.h \
+    src/codeeditor.h \
+    src/highlighter.h \
+    src/linenumberarea.h \
+    src/mainwindow.h \
+    src/settings.h
 
 FORMS += \
-    mainwindow.ui \
-    settings.ui
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+    ui/mainwindow.ui \
+    ui/settings.ui
 
 RESOURCES += \
     Examples.qrc
