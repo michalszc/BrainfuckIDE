@@ -38,13 +38,15 @@ private slots:
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &rect, int dy);
 
+public:
+    Highlighter *highlighter;
+
 private:
     QWidget *lineNumberArea;
     QColor lineNumberAreaColor;
     QColor lineNumberTextColor;
     QColor lineColor;
     QColor backgroundColor;
-    Highlighter *highlighter;
 };
 
 #endif // CODEEDITOR_H

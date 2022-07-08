@@ -3,9 +3,10 @@
 Highlighter::Highlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
 {
+    setDefaultColors();
     HighlightingRule rule;
 
-    changeValueFormat.setForeground(QColor(14, 184, 190,255)); //Qt::red
+    changeValueFormat.setForeground(changeValueColor);
     const QString changeValuePatterns[] = {
         QStringLiteral("\\+"),
         QStringLiteral("-")
@@ -16,7 +17,7 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    movingPointerFormat.setForeground(QColor(238,110,101,255)); //Qt::green
+    movingPointerFormat.setForeground(movingPointerColor);
     const QString movingPointerPatterns[] = {
         QStringLiteral("<"),
         QStringLiteral(">")
@@ -27,7 +28,7 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    loopFormat.setForeground(QColor(173,186,199,255)); // Qt::cyan
+    loopFormat.setForeground(loopColor);
     const QString loopPatterns[] = {
         QStringLiteral("\\["),
         QStringLiteral("]")
@@ -38,12 +39,12 @@ Highlighter::Highlighter(QTextDocument *parent)
         highlightingRules.append(rule);
     }
 
-    readFormat.setForeground(QColor(255,165,0,255)); // orange // Qt::darkYellow
+    readFormat.setForeground(readColor);
     rule.pattern = QRegularExpression(QStringLiteral(","));
     rule.format = readFormat;
     highlightingRules.append(rule);
 
-    inputFormat.setForeground(Qt::yellow); // Qt::yellow
+    inputFormat.setForeground(inputColor);
     rule.pattern = QRegularExpression(QStringLiteral("\\."));
     rule.format = inputFormat;
     highlightingRules.append(rule);
@@ -55,11 +56,51 @@ Highlighter::Highlighter(QTextDocument *parent)
     commentFont.setFixedPitch(true);
     commentFont.setPointSize(12);
 
-    commentFormat.setForeground(Qt::darkGray);
+    commentFormat.setForeground(commentColor);
     commentFormat.setFont(commentFont);
     rule.pattern = QRegularExpression(QStringLiteral("([^\\+-<>,\\.\\[\\]]|[0-9:;/])"));
     rule.format = commentFormat;
     highlightingRules.append(rule);
+}
+
+void Highlighter::setDefaultColors(){
+    changeValueColor = QColor(14, 184, 190,255);  //Qt::red
+    movingPointerColor = QColor(238,110,101,255); //Qt::green
+    loopColor = QColor(173,186,199,255); //Qt::cyan
+    readColor = QColor(255,165,0,255); // orange // Qt::darkYellow
+    inputColor = Qt::yellow;
+    commentColor = Qt::darkGray;
+}
+
+void Highlighter::setChangeValueColor(QColor newChangeValueColor){
+    changeValueColor = newChangeValueColor;
+    changeValueFormat.setForeground(changeValueColor);
+    highlightingRules[0].format = highlightingRules[1].format = changeValueFormat;
+}
+void Highlighter::setMovingPointerColor(QColor newMovingPointerColor){
+    movingPointerColor = newMovingPointerColor;
+    movingPointerFormat.setForeground(movingPointerColor);
+    highlightingRules[2].format = highlightingRules[3].format = movingPointerFormat;
+}
+void Highlighter::setLoopColor(QColor newLoopColor){
+    loopColor = newLoopColor;
+    loopFormat.setForeground(loopColor);
+    highlightingRules[4].format = highlightingRules[5].format = loopFormat;
+}
+void Highlighter::setReadColor(QColor newReadColor){
+    readColor = newReadColor;
+    readFormat.setForeground(readColor);
+    highlightingRules[6].format = readFormat;
+}
+void Highlighter::setInputColor(QColor newInputColor){
+    inputColor = newInputColor;
+    inputFormat.setForeground(inputColor);
+    highlightingRules[7].format = inputFormat;
+}
+void Highlighter::setCommentColor(QColor newCommentColor){
+    commentColor = newCommentColor;
+    commentFormat.setForeground(commentColor);
+    highlightingRules[8].format = commentFormat;
 }
 
 void Highlighter::highlightBlock(const QString &text)

@@ -271,12 +271,12 @@ void MainWindow::openSettings(){
         codeEditor->getLineColor(), // Editor current line color
         inpbackgroundColor, // Input & Output background color
         inptextColor, // Input & Output text color
-        QColor(238,110,101,255), // <>
-        QColor(255,165,0,255), // ,
-        Qt::yellow,// .
-        QColor(14, 184, 190,255),// + -
-        QColor(173,186,199,255), // []
-        Qt::darkGray// comment
+        codeEditor->highlighter->getMovingPointerColor(), // <>
+        codeEditor->highlighter->getReadColor(), // ,
+        codeEditor->highlighter->getInputColor(),// .
+        codeEditor->highlighter->getChangeValueColor(),// + -
+        codeEditor->highlighter->getLoopColor(), // []
+        codeEditor->highlighter->getCommentColor()// comment
     };
     Settings s(awesome,colors, codeEditor->font(), this);
     s.setModal(true);
@@ -302,6 +302,14 @@ void MainWindow::openSettings(){
         inptextColor = colors[6];
         input->setStyleSheet("background:"+QString(colors[5].name())+";color:"+QString(colors[6].name()));
         output->setStyleSheet("background:"+QString(colors[5].name())+";color:"+QString(colors[6].name()));
+
+        codeEditor->highlighter->setMovingPointerColor(colors[7]);
+        codeEditor->highlighter->setReadColor(colors[8]);
+        codeEditor->highlighter->setInputColor(colors[9]);
+        codeEditor->highlighter->setChangeValueColor(colors[10]);
+        codeEditor->highlighter->setLoopColor(colors[11]);
+        codeEditor->highlighter->setCommentColor(colors[12]);
+        codeEditor->highlighter->rehighlight();
     }
 }
 
