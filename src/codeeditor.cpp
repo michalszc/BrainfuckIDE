@@ -110,10 +110,13 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event){
     int blockNumber = block.blockNumber();
     int top = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
     int bottom = top + qRound(blockBoundingRect(block).height());
+    QFont f = font();
+    f.setPointSize(font().pointSize() * 0.9);
     while (block.isValid() && top <= event->rect().bottom()) {
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(lineNumberTextColor);
+            painter.setFont(f);
             painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
                              Qt::AlignRight, number);
         }
