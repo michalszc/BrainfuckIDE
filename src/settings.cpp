@@ -92,7 +92,7 @@ void Settings::addListItem(QString text, QColor color,  int character){
 }
 
 void Settings::setup(){
-    codeEditor->setPlainText("<>+-[],.");
+    codeEditor->setPlainText("<>+-[],.comment");
     codeEditor->setReadOnly(true);
     codeEditor->setFixedHeight( codeEditor->fontMetrics().height() * 3);
     layout()->addWidget(codeEditor);
@@ -105,11 +105,7 @@ void Settings::setup(){
     }
 
     layout()->addWidget(list);
-
-    QPushButton *change_button = new QPushButton(this);
-    change_button->setText("Change");
-    connect(change_button, SIGNAL(clicked()), this, SLOT(change()));
-    layout()->addWidget(change_button);
+    connect(list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(change()));
 
     setWindowTitle("Brainfuck IDE - Settings");
     QVariantMap options;
