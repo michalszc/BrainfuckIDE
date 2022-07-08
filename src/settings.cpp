@@ -38,6 +38,7 @@ Settings::~Settings()
 }
 
 void Settings::change(){
+  if ( list->currentItem() == nullptr ) return;
   QString currentItem =  list->currentItem()->text();
   QString itemType = currentItem.mid(0,currentItem.lastIndexOf(":"));
   QString itemValue = currentItem.mid(currentItem.lastIndexOf(":")+1).replace(" ", "");
