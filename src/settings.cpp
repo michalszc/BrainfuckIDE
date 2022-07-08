@@ -76,6 +76,30 @@ void Settings::change(){
               codeEditor->cursorPositionChanged();
               codeEditor->setReadOnly(true);
               break;
+          case 8:
+              codeEditor->highlighter->setMovingPointerColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
+          case 9:
+              codeEditor->highlighter->setReadColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
+          case 10:
+              codeEditor->highlighter->setInputColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
+          case 11:
+              codeEditor->highlighter->setChangeValueColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
+          case 12:
+              codeEditor->highlighter->setLoopColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
+          case 13:
+              codeEditor->highlighter->setCommentColor(newColor);
+              codeEditor->highlighter->rehighlight();
+              break;
           default:
               break;
           }
