@@ -1,13 +1,14 @@
 #include "settings.h"
 #include "ui_settings.h"
 
-Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,  QWidget *parent) :
+Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font, const QFont commentFont, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
     awesome = awesome_;
     font_ = font;
+    commentFont_ = commentFont;
     codeEditor = new CodeEditor;
     codeEditor->setFont(font_);
     list = new QListWidget(this);
@@ -49,6 +50,14 @@ void Settings::change(){
           font_ = newFont;
           list->currentItem()->setText(itemType+":  "+font_.family());
           codeEditor->setFont(font_);
+      }
+  }else if( itemType == "Comment Font" ){
+      QFont newFont = QFontDialog::getFont( &ok, commentFont_, this);
+      if (ok){
+          commentFont_ = newFont;
+          list->currentItem()->setText(itemType+":  "+commentFont_.family());
+          codeEditor->highlighter->setCommentFont(commentFont_);
+          codeEditor->highlighter->rehighlight();
       }
   }else{
       QColor newColor = QColorDialog::getColor(QColor(itemValue), this, "Choose color");
@@ -122,7 +131,7 @@ void Settings::setup(){
     layout()->addWidget(codeEditor);
 
     addListItem("Font: " + font_.family(), Qt::gray, fa::font);
-
+    addListItem("Comment Font: " + commentFont_.family(), Qt::gray, fa::font);
 
     for(std::pair<QString, QColor>& item : listItems ){
         addListItem(item.first, item.second);

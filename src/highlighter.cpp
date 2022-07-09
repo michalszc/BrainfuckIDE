@@ -4,6 +4,7 @@ Highlighter::Highlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
 {
     setDefaultColors();
+    setDefaultCommentFont();
     HighlightingRule rule;
 
     changeValueFormat.setForeground(changeValueColor);
@@ -49,13 +50,6 @@ Highlighter::Highlighter(QTextDocument *parent)
     rule.format = inputFormat;
     highlightingRules.append(rule);
 
-
-    QFont commentFont;
-    commentFont.setFamily("Courier");
-    commentFont.setItalic(true);
-    commentFont.setFixedPitch(true);
-    commentFont.setPointSize(12);
-
     commentFormat.setForeground(commentColor);
     commentFormat.setFont(commentFont);
     rule.pattern = QRegularExpression(QStringLiteral("([^\\+-<>,\\.\\[\\]]|[0-9:;/])"));
@@ -70,6 +64,13 @@ void Highlighter::setDefaultColors(){
     readColor = QColor(255,165,0,255); // orange // Qt::darkYellow
     inputColor = Qt::yellow;
     commentColor = Qt::darkGray;
+}
+
+void Highlighter::setDefaultCommentFont(){
+    commentFont.setFamily("Courier");
+    commentFont.setItalic(true);
+    commentFont.setFixedPitch(true);
+    commentFont.setPointSize(12);
 }
 
 void Highlighter::setChangeValueColor(QColor newChangeValueColor){
@@ -100,6 +101,12 @@ void Highlighter::setInputColor(QColor newInputColor){
 void Highlighter::setCommentColor(QColor newCommentColor){
     commentColor = newCommentColor;
     commentFormat.setForeground(commentColor);
+    highlightingRules[8].format = commentFormat;
+}
+
+void Highlighter::setCommentFont(QFont newFont){
+    commentFont = newFont;
+    commentFormat.setFont(commentFont);
     highlightingRules[8].format = commentFormat;
 }
 

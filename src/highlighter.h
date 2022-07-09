@@ -23,6 +23,8 @@ public:
     void setInputColor(QColor newInputColor);
     void setCommentColor(QColor newCommetColor);
 
+    void setCommentFont(QFont newFont);
+
     QColor getChangeValueColor() { return changeValueColor; }
     QColor getMovingPointerColor() { return movingPointerColor; }
     QColor getLoopColor() { return loopColor; }
@@ -30,9 +32,12 @@ public:
     QColor getInputColor() { return inputColor; }
     QColor getCommentColor() { return commentColor; }
 
+    QFont getCommentFont() { return commentFont; }
+
 protected:
     void highlightBlock(const QString &text) override;
     void setDefaultColors();
+    void setDefaultCommentFont();
 
 private:
     struct HighlightingRule
@@ -55,6 +60,8 @@ private:
     QColor readColor;
     QColor inputColor;
     QColor commentColor;
+
+    QFont commentFont;
 };
 
 #endif // HIGHLIGHTER_H

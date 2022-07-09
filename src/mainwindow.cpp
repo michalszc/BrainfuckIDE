@@ -278,13 +278,15 @@ void MainWindow::openSettings(){
         codeEditor->highlighter->getLoopColor(), // []
         codeEditor->highlighter->getCommentColor()// comment
     };
-    Settings s(awesome,colors, codeEditor->font(), this);
+    Settings s(awesome,colors, codeEditor->font(), codeEditor->highlighter->getCommentFont(), this);
     s.setModal(true);
     if ( s.exec() == QDialog::Accepted ){
         QFont font = s.getFont();
         codeEditor->setFont(font);
         input->setFont(font);
         output->setFont(font);
+        font = s.getCommentFont();
+        codeEditor->highlighter->setCommentFont(font);
         std::vector<QColor> colors = s.getColors();
 
         setPalette(colors[0]);

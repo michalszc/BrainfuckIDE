@@ -18,10 +18,11 @@ class Settings : public QDialog
     Q_OBJECT
 
 public:
-    explicit Settings(QtAwesome* awesome_, const QColor colors[], const QFont font, QWidget *parent = nullptr);
+    explicit Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,const QFont commentFont, QWidget *parent = nullptr);
     ~Settings();
     std::vector<QColor> getColors();
     QFont getFont() { return font_; }
+    QFont getCommentFont() { return commentFont_; }
 
 private:
     void setup();
@@ -40,6 +41,7 @@ private:
 
     //Font
     QFont font_;
+    QFont commentFont_;
 
     //Colors
     std::vector<std::pair<QString, QColor>> listItems;
