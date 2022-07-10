@@ -39,6 +39,7 @@ protected:
 private:
     void createActions();
     void createMenus();
+    bool checkIfExample();
     bool maybeSave();
     bool saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);

@@ -355,6 +355,15 @@ void MainWindow::openSettings(){
     }
 }
 
+bool MainWindow::checkIfExample(){
+    if( currentFile.startsWith(":/examples/")){
+        QMessageBox::warning(this, "Save example file error", "Cannot save example file: " + QFileInfo(currentFile).fileName()
+                             + "<br> you can save it in different name.");
+        return true;
+    }
+    return false;
+}
+
 void MainWindow::setCurrentFile(const QString &fileName){
     currentFile = fileName;
     codeEditor->document()->setModified(false);
@@ -368,7 +377,7 @@ void MainWindow::setCurrentFile(const QString &fileName){
 }
 
 bool MainWindow::save(){
-    if (currentFile.isEmpty()) {
+    if ( currentFile.isEmpty() || checkIfExample() ) {
         return saveAs();
     } else {
         return saveFile(currentFile);
