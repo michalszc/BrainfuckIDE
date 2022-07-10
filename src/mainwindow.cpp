@@ -283,22 +283,34 @@ void MainWindow::newFile(){
     }
 }
 
+void MainWindow::loadFile(const QString &fileName){
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("Open file error"),
+                             tr("Cannot read file %1:\n%2.")
+                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+        return;
+    }
+
+    QTextStream in(&file);
+#ifndef QT_NO_CURSOR
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+    codeEditor->setPlainText(in.readAll());
+#ifndef QT_NO_CURSOR
+    QGuiApplication::restoreOverrideCursor();
+#endif
+    file.close();
+    setCurrentFile(fileName);
+    statusBar()->showMessage(tr("File loaded"), 2000);
+}
+
 void MainWindow::open(){
     if(maybeSave()){
         QString fileName = QFileDialog::getOpenFileName(this, "Open the file", "", "Brainfuck files (*.bf)");
         if (fileName.isEmpty())
             return;
-        QFile file(fileName);
-        currentFile = fileName;
-        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Open file error", "Cannot open file: " + file.errorString());
-            return;
-        }
-        QTextStream in(&file);
-        QString text = in.readAll();
-        codeEditor->setPlainText(text);
-        file.close();
-        setCurrentFile(fileName);
+        loadFile(fileName);
     }
 }
 
@@ -432,17 +444,9 @@ void MainWindow::run(){
 }
 
 void MainWindow::openExample(QString fileName){
-    QFile file(fileName);
-    currentFile = fileName;
-    if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, "Open example file error", "Cannot open file: " + file.errorString());
-        return;
+    if(maybeSave()){
+        loadFile(fileName);
     }
-    QTextStream in(&file);
-    QString text = in.readAll();
-    codeEditor->setPlainText(text);
-    file.close();
-    setCurrentFile(fileName);
 }
 
 void MainWindow::about(){

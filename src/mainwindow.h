@@ -42,6 +42,7 @@ private:
     bool checkIfExample();
     bool maybeSave();
     bool saveFile(const QString &fileName);
+    void loadFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
 
 private slots:
