@@ -26,19 +26,20 @@ MainWindow::MainWindow(QWidget *parent)
     font.setFixedPitch(true);
     font.setPointSize(12);
 
+    inpbackgroundColor = QColor(43,43,43,255);
+    inptextColor = QColor(130,128,135,255); // QColor(166,175,161,255)
+
     input = new QLineEdit;
     input->setPlaceholderText("Input");
-    input->setFont(font);
-
-    inpbackgroundColor = QColor(43,43,43,255);
-    inptextColor = QColor(130,128,135,255);
+    input->setFont(codeEditor->font());
+    input->setStyleSheet("background:"+QString(inpbackgroundColor.name())+";color:"+QString(inptextColor.name()));
 
     output = new QTextEdit;
     output->setPlaceholderText("Output");
-    output->setFont(font);
-    output->setTextColor(QColor(166,175,161,255));
+    output->setFont(codeEditor->font());
     output->setFixedHeight( output->fontMetrics().height() * 10);
     output->setReadOnly(true);
+    output->setStyleSheet("background:"+QString(inpbackgroundColor.name())+";color:"+QString(inptextColor.name()));
 
     QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->addWidget(codeEditor);
