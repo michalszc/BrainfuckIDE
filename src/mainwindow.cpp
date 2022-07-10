@@ -46,14 +46,18 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(input);
     mainLayout->addWidget(output);
 
+    connect(codeEditor, &QPlainTextEdit::textChanged,
+            this, &MainWindow::documentWasModified);
+
     mainWidget = new QWidget();
     mainWidget->setLayout(mainLayout);
     mainWidget->setMinimumSize(120,100);
     setCentralWidget(mainWidget);
-    setWindowTitle("Brainfuck IDE");
     setAutoFillBackground(true);
     setPalette(QColor(43,43,43,255));
     setWindowState(Qt::WindowMaximized);
+    setCurrentFile(QString());
+    setUnifiedTitleAndToolBarOnMac(true);
     createActions();
     createMenus();
 }
@@ -61,6 +65,10 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::documentWasModified(){
+    setWindowModified(codeEditor->document()->isModified());
 }
 
 #ifndef QT_NO_CONTEXTMENU
@@ -239,28 +247,59 @@ void MainWindow::createMenus()
 
 }
 
+void MainWindow::closeEvent(QCloseEvent *event){
+    if (maybeSave()) {
+//        writeSettings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}
+
+bool MainWindow::maybeSave(){
+    if (!codeEditor->document()->isModified())
+        return true;
+    const QMessageBox::StandardButton ret
+        = QMessageBox::warning(this, tr("BrainfuckIDE"),
+                               tr("The file has been modified.\n"
+                                  "Do you want to save your changes?"),
+                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    switch (ret) {
+    case QMessageBox::Save:
+        return save();
+    case QMessageBox::Cancel:
+        return false;
+    default:
+        break;
+    }
+    return true;
+}
 
 void MainWindow::newFile(){
-    currentFile.clear();
-    codeEditor->setPlainText(QString());
-    setWindowTitle("Brainfuck IDE - newfile.bf");
+    if(maybeSave()){
+        currentFile.clear();
+        codeEditor->setPlainText(QString());
+        setCurrentFile(QString());
+    }
 }
 
 void MainWindow::open(){
-    QString fileName = QFileDialog::getOpenFileName(this, "Open the file", "", "Brainfuck files (*.bf)");
-    if (fileName.isEmpty())
-        return;
-    QFile file(fileName);
-    currentFile = fileName;
-    if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
-        return;
+    if(maybeSave()){
+        QString fileName = QFileDialog::getOpenFileName(this, "Open the file", "", "Brainfuck files (*.bf)");
+        if (fileName.isEmpty())
+            return;
+        QFile file(fileName);
+        currentFile = fileName;
+        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Open file error", "Cannot open file: " + file.errorString());
+            return;
+        }
+        QTextStream in(&file);
+        QString text = in.readAll();
+        codeEditor->setPlainText(text);
+        file.close();
+        setCurrentFile(fileName);
     }
-    setWindowTitle("Brainfuck IDE - " + fileName.mid(fileName.lastIndexOf("/")+1));
-    QTextStream in(&file);
-    QString text = in.readAll();
-    codeEditor->setPlainText(text);
-    file.close();
 }
 
 void MainWindow::openSettings(){
@@ -316,43 +355,58 @@ void MainWindow::openSettings(){
     }
 }
 
-void MainWindow::save(){
-    QString fileName;
-    if (currentFile.isEmpty()) {
-        fileName = QFileDialog::getSaveFileName(this, "Save", "newFile.bf", "Brainfuck files (*.bf)");
-        if (fileName.isEmpty())
-            return;
-        currentFile = fileName;
-    } else {
-        fileName = currentFile;
-    }
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
-        return;
-    }
-    setWindowTitle("Brainfuck IDE - " + fileName.mid(fileName.lastIndexOf("/")+1));
-    QTextStream out(&file);
-    QString text = codeEditor->toPlainText();
-    out << text;
+void MainWindow::setCurrentFile(const QString &fileName){
+    currentFile = fileName;
+    codeEditor->document()->setModified(false);
+    setWindowModified(false);
+
+    QString shownName = currentFile;
+    if (currentFile.isEmpty())
+        shownName = "untitled.txt";
+    setWindowFilePath(shownName);
+    setWindowTitle("BrainfuckIDE - "+QFileInfo(shownName).fileName()+"[*]");
 }
 
-void MainWindow::saveAs(){
+bool MainWindow::save(){
+    if (currentFile.isEmpty()) {
+        return saveAs();
+    } else {
+        return saveFile(currentFile);
+    }
+}
+
+bool MainWindow::saveAs(){
     QString fileName = QFileDialog::getSaveFileName(this, "Save as", "newFile.bf", "Brainfuck files (*.bf)");
     if (fileName.isEmpty())
-        return;
-    QFile file(fileName);
+        return false;
+    return saveFile(fileName);
+}
 
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
-        return;
+bool MainWindow::saveFile(const QString &fileName){
+    QString errorMessage;
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+    QSaveFile file(fileName);
+    if (file.open(QIODevice::WriteOnly | QFile::Text)) {
+        QTextStream out(&file);
+        out << codeEditor->toPlainText();
+        if (!file.commit()) {
+            errorMessage = tr("Cannot write file %1:\n%2.")
+                           .arg(QDir::toNativeSeparators(fileName), file.errorString());
+        }
+    }else{
+        errorMessage = tr("Cannot open file %1 for writing:\n%2.")
+                       .arg(QDir::toNativeSeparators(fileName), file.errorString());
     }
-    currentFile = fileName;
-    setWindowTitle(fileName);
-    QTextStream out(&file);
-    QString text = codeEditor->toPlainText();
-    out << text;
-    file.close();
+    QGuiApplication::restoreOverrideCursor();
+
+    if (!errorMessage.isEmpty()) {
+        QMessageBox::warning(this, tr("Save file error"), errorMessage);
+        return false;
+    }
+
+    setCurrentFile(fileName);
+    statusBar()->showMessage(tr("File saved"), 2000);
+    return true;
 }
 
 void MainWindow::print(){
@@ -372,14 +426,14 @@ void MainWindow::openExample(QString fileName){
     QFile file(fileName);
     currentFile = fileName;
     if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
+        QMessageBox::warning(this, "Open example file error", "Cannot open file: " + file.errorString());
         return;
     }
-    setWindowTitle("Brainfuck IDE - " + fileName.mid(fileName.lastIndexOf("/")+1));
     QTextStream in(&file);
     QString text = in.readAll();
     codeEditor->setPlainText(text);
     file.close();
+    setCurrentFile(fileName);
 }
 
 void MainWindow::about(){

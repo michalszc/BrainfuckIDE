@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSaveFile>
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
@@ -28,7 +29,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 protected:
+    void closeEvent(QCloseEvent *event) override;
 #ifndef QT_NO_CONTEXTMENU
     void contextMenuEvent(QContextMenuEvent *event) override;
 #endif // QT_NO_CONTEXTMENU
@@ -36,17 +39,21 @@ protected:
 private:
     void createActions();
     void createMenus();
+    bool maybeSave();
+    bool saveFile(const QString &fileName);
+    void setCurrentFile(const QString &fileName);
 
 private slots:
     void newFile();
     void open();
     void openSettings();
-    void save();
-    void saveAs();
+    bool save();
+    bool saveAs();
     void print();
     void run();
     void openExample(QString fileName);
     void about();
+    void documentWasModified();
 
 private:
     Ui::MainWindow *ui;
