@@ -13,6 +13,7 @@
 #include <QFontDialog>
 #include <QDirIterator>
 #include <QLineEdit>
+#include <QSettings>
 #include "codeeditor.h"
 #include "Interpreter.h"
 #include "QtAwesome.h"
@@ -44,6 +45,8 @@ private:
     bool saveFile(const QString &fileName);
     void loadFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
+    void readSettings();
+    void writeSettings();
 
 private slots:
     void newFile();

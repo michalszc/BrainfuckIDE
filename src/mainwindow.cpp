@@ -55,8 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(mainWidget);
     setAutoFillBackground(true);
     setPalette(QColor(43,43,43,255));
-    setWindowState(Qt::WindowMaximized);
-    setCurrentFile(QString());
+    readSettings();
     setUnifiedTitleAndToolBarOnMac(true);
     createActions();
     createMenus();
@@ -65,6 +64,31 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::readSettings(){
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
+    if (geometry.isEmpty()) {
+        const QRect availableGeometry = screen()->availableGeometry();
+        resize(availableGeometry.width() / 3, availableGeometry.height() / 2);
+        move((availableGeometry.width() - width()) / 2,
+             (availableGeometry.height() - height()) / 2);
+    } else {
+        restoreGeometry(geometry);
+    }
+    QString fileName = settings.value("file").toString();
+    if(fileName.isEmpty()){
+        setCurrentFile(QString());
+    }else{
+        loadFile(fileName);
+    }
+}
+
+void MainWindow::writeSettings(){
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("file", currentFile);
 }
 
 void MainWindow::documentWasModified(){
@@ -249,7 +273,7 @@ void MainWindow::createMenus()
 
 void MainWindow::closeEvent(QCloseEvent *event){
     if (maybeSave()) {
-//        writeSettings();
+        writeSettings();
         event->accept();
     } else {
         event->ignore();
@@ -383,7 +407,7 @@ void MainWindow::setCurrentFile(const QString &fileName){
 
     QString shownName = currentFile;
     if (currentFile.isEmpty())
-        shownName = "untitled.txt";
+        shownName = "untitled.bf";
     setWindowFilePath(shownName);
     setWindowTitle("BrainfuckIDE - "+QFileInfo(shownName).fileName()+"[*]");
 }
