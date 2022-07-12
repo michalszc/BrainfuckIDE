@@ -196,7 +196,7 @@ void MainWindow::createActions()
     pasteAct->setIconVisibleInMenu(true);
     connect(pasteAct, &QAction::triggered, codeEditor, &QPlainTextEdit::paste);
 
-    selectAllAct = new QAction("Paste", this);
+    selectAllAct = new QAction("Select all", this);
     selectAllAct->setShortcuts(QKeySequence::SelectAll);
     selectAllAct->setStatusTip("Select all from the current file");
     selectAllAct->setIconVisibleInMenu(true);
