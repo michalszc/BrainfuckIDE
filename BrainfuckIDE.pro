@@ -42,13 +42,15 @@ HEADERS += \
     src/highlighter.h \
     src/linenumberarea.h \
     src/mainwindow.h \
-    src/settings.h
+    src/settings.h \
+    src/qsettings_json.hpp
 
 FORMS += \
     ui/mainwindow.ui \
     ui/settings.ui
 
 RESOURCES += \
-    Examples.qrc
+    Examples.qrc \
+    Settings.qrc
 
 include(QtAwesome/QtAwesome.pri)

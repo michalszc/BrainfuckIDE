@@ -1,0 +1,36 @@
+{
+    "dark": {
+        "backgroundColor": "#2b2b2b",
+        "changeValueColor": "#0eb8be",
+        "commentColor": "#808080",
+        "commentFont": "Courier,12,-1,5,400,1,0,0,1,0,0,0,0,0,0,1",
+        "editorBackgroundColor": "#2b2b2b",
+        "editorCurrentLineColor": "#323232",
+        "editorFont": "Cascadia Mono,14,-1,5,400,0,0,0,1,0,0,0,0,0,0,1",
+        "editorLineNumbersColor": "#828087",
+        "editorSidebarColor": "#313335",
+        "inputColor": "#ffff00",
+        "input_outputBackgroundColor": "#2b2b2b",
+        "input_outputTextColor": "#828087",
+        "loopColor": "#adbac7",
+        "movingPointerColor": "#ee6e65",
+        "readColor": "#ffa500"
+    },
+    "light": {
+        "backgroundColor": "#2b2b2b",
+        "changeValueColor": "#b43167",
+        "commentColor": "#60686f",
+        "commentFont": "Courier,12,-1,5,400,1,0,0,1,0,0,0,0,0,0,1",
+        "editorBackgroundColor": "#e5e5e5",
+        "editorCurrentLineColor": "#cccccc",
+        "editorFont": "Cascadia Mono,14,-1,5,400,0,0,0,1,0,0,0,0,0,0,1",
+        "editorLineNumbersColor": "#2f2f2f",
+        "editorSidebarColor": "#fffffe",
+        "inputColor": "#4fc211",
+        "input_outputBackgroundColor": "#d5d5d4",
+        "input_outputTextColor": "#2f2f2f",
+        "loopColor": "#0844c7",
+        "movingPointerColor": "#f40505",
+        "readColor": "#946906"
+    }
+}

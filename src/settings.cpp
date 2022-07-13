@@ -11,6 +11,19 @@ Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,
     commentFont_ = commentFont;
     codeEditor = new CodeEditor;
     codeEditor->setFont(font_);
+    codeEditor->setBackgroundColor(colors[1]);
+    codeEditor->setLineNumberAreaColor(colors[2]);
+    codeEditor->setLineNumberTextColor(colors[3]);
+    codeEditor->setLineColor(colors[4]);
+    codeEditor->cursorPositionChanged();
+    codeEditor->highlighter->setMovingPointerColor(colors[7]);
+    codeEditor->highlighter->setReadColor(colors[8]);
+    codeEditor->highlighter->setInputColor(colors[9]);
+    codeEditor->highlighter->setChangeValueColor(colors[10]);
+    codeEditor->highlighter->setLoopColor(colors[11]);
+    codeEditor->highlighter->setCommentColor(colors[12]);
+    codeEditor->highlighter->rehighlight();
+
     list = new QListWidget(this);
     const QString text[] = {
         "IDE background color: ",
@@ -67,52 +80,52 @@ void Settings::change(){
           list->currentItem()->setIcon(awesome->icon(fa::square, options).pixmap(256,256));
           list->currentItem()->setText(itemType+":  "+newColor.name());
           switch(list->currentRow()){
-          case 1:
+          case 2:
               setPalette(newColor);
               break;
-          case 2:
+          case 3:
               codeEditor->setBackgroundColor(newColor);
               break;
-          case 3:
+          case 4:
               codeEditor->setLineNumberAreaColor(newColor);
               break;
-          case 4:
+          case 5:
               codeEditor->setLineNumberTextColor(newColor);
               break;
-          case 5:
+          case 6:
               codeEditor->setLineColor(newColor);
               codeEditor->setReadOnly(false);
               codeEditor->cursorPositionChanged();
               codeEditor->setReadOnly(true);
               break;
-          case 8:
+          case 9:
               codeEditor->highlighter->setMovingPointerColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
-          case 9:
+          case 10:
               codeEditor->highlighter->setReadColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
-          case 10:
+          case 11:
               codeEditor->highlighter->setInputColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
-          case 11:
+          case 12:
               codeEditor->highlighter->setChangeValueColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
-          case 12:
+          case 13:
               codeEditor->highlighter->setLoopColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
-          case 13:
+          case 14:
               codeEditor->highlighter->setCommentColor(newColor);
               codeEditor->highlighter->rehighlight();
               break;
           default:
               break;
           }
-          listItems[list->currentRow()-1].second = newColor;
+          listItems[list->currentRow()-2].second = newColor;
       }
   }
 }

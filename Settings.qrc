@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/settings">
+        <file>themes.json</file>
+    </qresource>
+</RCC>
