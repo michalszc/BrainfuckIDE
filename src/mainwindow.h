@@ -69,6 +69,8 @@ private:
     CodeEditor *codeEditor;
     QString currentFile;
 
+    QString currentTheme;
+
     QLineEdit *input;
     QTextEdit *output;
     QColor inpbackgroundColor;
