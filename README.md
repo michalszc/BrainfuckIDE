@@ -32,6 +32,11 @@ _An intuitive, featureful and visually appealing Brainfuck IDE built in C++ usin
 ## Features
 - Syntax highlighting
 - Code examples
+- Themes dark, light and custom one
+
+## Used in the project
+- Example codes from [Brainfuck.org](http://brainfuck.org/)
+- [QtAwesome](https://github.com/gamecreature/QtAwesome) library to add [Font Awesome](https://fontawesome.com/) icons
 
 ## License
 [![Licence](https://img.shields.io/github/license/michalszc/BrainfuckIDE?style=for-the-badge)](./LICENSE)
