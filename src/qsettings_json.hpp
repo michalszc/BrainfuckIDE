@@ -27,7 +27,6 @@ void paraseJsonObject(QJsonObject &json, QString prefix, QMap<QString, QVariant>
         }
     }
 }
-
 QJsonObject restoreJsonObject(QMap<QString, QVariant> &map)
 {
     QJsonObject obj;
@@ -86,7 +85,6 @@ QJsonObject restoreJsonObject(QMap<QString, QVariant> &map)
     }
     return obj;
 }
-
 bool readSettingsJson(QIODevice &device, QMap<QString, QVariant> &map)
 {
     QJsonParseError jsonError;
@@ -97,7 +95,6 @@ bool readSettingsJson(QIODevice &device, QMap<QString, QVariant> &map)
     paraseJsonObject(obj, QString(), map);
     return true;
 }
-
 bool writeSettingsJson(QIODevice &device, const QMap<QString, QVariant> &map)
 {
     QMap<QString, QVariant> tmp_map = map;

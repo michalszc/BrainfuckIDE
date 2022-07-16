@@ -1,7 +1,7 @@
 #include "settings.h"
 #include "ui_settings.h"
-
-Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font, const QFont commentFont, QWidget *parent) :
+//#include "qsettings_json.hpp"
+Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font, const QFont commentFont, QString theme, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
 {
@@ -23,7 +23,8 @@ Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,
     codeEditor->highlighter->setLoopColor(colors[11]);
     codeEditor->highlighter->setCommentColor(colors[12]);
     codeEditor->highlighter->rehighlight();
-
+    themes = new QListWidget(this);
+    currentTheme = theme;
     list = new QListWidget(this);
     const QString text[] = {
         "IDE background color: ",
@@ -49,6 +50,159 @@ Settings::Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,
 Settings::~Settings()
 {
     delete ui;
+}
+
+void Settings::changeTheme(){
+    if (themes->currentItem() == nullptr) return;
+    QString currentItem =  themes->currentItem()->text();
+    QFont editorFont;
+    QFont commentFont;
+    QColor backgroundColor;
+    QColor editorBackgroundColor;
+    QColor editorSidebarColor;
+    QColor editorLineNumbersColor;
+    QColor editorCurrentLineColor;
+    QColor input_outputBackgroundColor;
+    QColor input_outputTextColor;
+    QColor movingPointerColor;
+    QColor readColor;
+    QColor inputColor;
+    QColor changeValueColor;
+    QColor loopColor;
+    QColor commentColor;
+
+    // load theme
+    if ( currentItem == "light" || currentItem == "dark" ){
+//        QSettings setting(":/settings/themes.json", JsonFormat);
+
+//        setting.beginGroup(currentItem);
+
+//        // Editor font
+//        editorFont = setting.value("editorFont").value<QFont>();
+//        codeEditor->setFont(editorFont);
+
+//        // Editor Comment font
+//        commentFont = setting.value("commentFont").value<QFont>();
+//        codeEditor->highlighter->setCommentFont(commentFont);
+
+//        // IDE background color
+//        backgroundColor = setting.value("backgroundColor").value<QColor>();
+//        setPalette(backgroundColor);
+
+//        // Editor background color
+//        editorBackgroundColor = setting.value("editorBackgroundColor").value<QColor>();
+//        codeEditor->setBackgroundColor(editorBackgroundColor);
+
+//        // Editor sidebar color
+//        editorSidebarColor = setting.value("editorSidebarColor").value<QColor>();
+//        codeEditor->setLineNumberAreaColor(editorSidebarColor);
+
+//        // Editor line numbers color
+//        editorLineNumbersColor = setting.value("editorLineNumbersColor").value<QColor>();
+//        codeEditor->setLineNumberTextColor(editorLineNumbersColor);
+
+//        // Editor current line color
+//        editorCurrentLineColor = setting.value("editorCurrentLineColor").value<QColor>();
+//        codeEditor->setLineColor(editorCurrentLineColor);
+//        codeEditor->cursorPositionChanged();
+
+//        // Input & Output background color
+//        input_outputBackgroundColor = setting.value("input_outputBackgroundColor").value<QColor>();
+
+//        // Input & Output text color
+//        input_outputTextColor = setting.value("input_outputTextColor").value<QColor>();
+
+//        // <>
+//        movingPointerColor = setting.value("movingPointerColor").value<QColor>();
+//        codeEditor->highlighter->setMovingPointerColor(movingPointerColor);
+
+//        // ,
+//        readColor = setting.value("readColor").value<QColor>();
+//        codeEditor->highlighter->setReadColor(readColor);
+
+//        // .
+//        inputColor = setting.value("inputColor").value<QColor>();
+//        codeEditor->highlighter->setInputColor(inputColor);
+
+//        // + -
+//        changeValueColor = setting.value("changeValueColor").value<QColor>();
+//        codeEditor->highlighter->setChangeValueColor(changeValueColor);
+
+//        // []
+//        loopColor = setting.value("loopColor").value<QColor>();
+//        codeEditor->highlighter->setLoopColor(loopColor);
+
+//        // comment
+//        commentColor = setting.value("commentColor").value<QColor>();
+//        codeEditor->highlighter->setCommentColor(commentColor);
+
+//        codeEditor->highlighter->rehighlight();
+
+//        setting.endGroup();
+    }else{
+        QSettings setting(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+
+        // Editor font
+        editorFont = setting.value("editorFont").value<QFont>();
+        codeEditor->setFont(editorFont);
+
+        // Editor Comment font
+        commentFont = setting.value("commentFont").value<QFont>();
+        codeEditor->highlighter->setCommentFont(commentFont);
+
+        // IDE background color
+        backgroundColor = setting.value("backgroundColor").value<QColor>();
+        setPalette(backgroundColor);
+
+        // Editor background color
+        editorBackgroundColor = setting.value("editorBackgroundColor").value<QColor>();
+        codeEditor->setBackgroundColor(editorBackgroundColor);
+
+        // Editor sidebar color
+        editorSidebarColor = setting.value("editorSidebarColor").value<QColor>();
+        codeEditor->setLineNumberAreaColor(editorSidebarColor);
+
+        // Editor line numbers color
+        editorLineNumbersColor = setting.value("editorLineNumbersColor").value<QColor>();
+        codeEditor->setLineNumberTextColor(editorLineNumbersColor);
+
+        // Editor current line color
+        editorCurrentLineColor = setting.value("editorCurrentLineColor").value<QColor>();
+        codeEditor->setLineColor(editorCurrentLineColor);
+        codeEditor->cursorPositionChanged();
+
+        // Input & Output background color
+        input_outputBackgroundColor = setting.value("input_outputBackgroundColor").value<QColor>();
+
+        // Input & Output text color
+        input_outputTextColor = setting.value("input_outputTextColor").value<QColor>();
+
+        // <>
+        movingPointerColor = setting.value("movingPointerColor").value<QColor>();
+        codeEditor->highlighter->setMovingPointerColor(movingPointerColor);
+
+        // ,
+        readColor = setting.value("readColor").value<QColor>();
+        codeEditor->highlighter->setReadColor(readColor);
+
+        // .
+        inputColor = setting.value("inputColor").value<QColor>();
+        codeEditor->highlighter->setInputColor(inputColor);
+
+        // + -
+        changeValueColor = setting.value("changeValueColor").value<QColor>();
+        codeEditor->highlighter->setChangeValueColor(changeValueColor);
+
+        // []
+        loopColor = setting.value("loopColor").value<QColor>();
+        codeEditor->highlighter->setLoopColor(loopColor);
+
+        // comment
+        commentColor = setting.value("commentColor").value<QColor>();
+        codeEditor->highlighter->setCommentColor(commentColor);
+
+        codeEditor->highlighter->rehighlight();
+    }
 }
 
 void Settings::change(){
@@ -140,8 +294,21 @@ void Settings::addListItem(QString text, QColor color,  int character){
 void Settings::setup(){
     codeEditor->setPlainText("<>+-[],.comment");
     codeEditor->setReadOnly(true);
-    codeEditor->setFixedHeight( codeEditor->fontMetrics().height() * 3);
+    codeEditor->setFixedHeight(codeEditor->fontMetrics().height() * 3);
     layout()->addWidget(codeEditor);
+
+    themes->addItem("light");
+    themes->addItem("dark");
+    themes->addItem("custom");
+    if(currentTheme == "light")
+        themes->setCurrentItem(themes->item(0));
+    else if(currentTheme == "dark")
+        themes->setCurrentItem(themes->item(1));
+    else
+        themes->setCurrentItem(themes->item(2));
+    themes->setFixedHeight(themes->sizeHintForRow(0) * themes->count() + 2 * themes->frameWidth());
+    layout()->addWidget(themes);
+    connect(themes, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeTheme()));
 
     addListItem("Font: " + font_.family(), Qt::gray, fa::font);
     addListItem("Comment Font: " + commentFont_.family(), Qt::gray, fa::font);

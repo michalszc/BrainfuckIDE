@@ -532,7 +532,7 @@ void MainWindow::openSettings(){
         codeEditor->highlighter->getLoopColor(), // []
         codeEditor->highlighter->getCommentColor()// comment
     };
-    Settings s(awesome,colors, codeEditor->font(), codeEditor->highlighter->getCommentFont(), this);
+    Settings s(awesome,colors, codeEditor->font(), codeEditor->highlighter->getCommentFont(), currentTheme, this);
     s.setModal(true);
     if ( s.exec() == QDialog::Accepted ){
         QFont font = s.getFont();
@@ -566,8 +566,8 @@ void MainWindow::openSettings(){
         codeEditor->highlighter->setLoopColor(colors[11]);
         codeEditor->highlighter->setCommentColor(colors[12]);
         codeEditor->highlighter->rehighlight();
-        saveTheme();
         currentTheme = "custom";
+        saveTheme();
     }
 }
 

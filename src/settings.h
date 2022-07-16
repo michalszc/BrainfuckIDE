@@ -6,9 +6,9 @@
 #include <QListWidget>
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QSettings>
 #include "codeeditor.h"
 #include "QtAwesome.h"
-
 namespace Ui {
 class Settings;
 }
@@ -18,7 +18,7 @@ class Settings : public QDialog
     Q_OBJECT
 
 public:
-    explicit Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,const QFont commentFont, QWidget *parent = nullptr);
+    explicit Settings(QtAwesome* awesome_, const QColor colors[], const QFont font,const QFont commentFont, QString theme, QWidget *parent = nullptr);
     ~Settings();
     std::vector<QColor> getColors();
     QFont getFont() { return font_; }
@@ -30,11 +30,16 @@ private:
 
 private slots:
     void change();
+    void changeTheme();
 
 private:
     Ui::Settings *ui;
     CodeEditor *codeEditor;
     QListWidget *list;
+
+    //Theme
+    QString currentTheme;
+    QListWidget *themes;
 
     //FontAwesome
     QtAwesome* awesome;
