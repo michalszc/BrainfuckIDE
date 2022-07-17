@@ -9,6 +9,7 @@
 #include <QSettings>
 #include "codeeditor.h"
 #include "QtAwesome.h"
+#include "qsettingsjsonwrapper.h"
 namespace Ui {
 class Settings;
 }

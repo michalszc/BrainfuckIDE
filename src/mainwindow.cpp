@@ -4,7 +4,6 @@
 #include<QDebug> // TO DELETE
 
 #include<QPushButton>
-#include "qsettings_json.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -55,7 +54,6 @@ MainWindow::MainWindow(QWidget *parent)
     mainWidget->setMinimumSize(120,100);
     setCentralWidget(mainWidget);
     setAutoFillBackground(true);
-//    setPalette(QColor(43,43,43,255));
     readSettings();
     setUnifiedTitleAndToolBarOnMac(true);
     createActions();
@@ -69,8 +67,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::getTheme(const QString name = "custom"){
     if ( name == "light" || name == "dark" ){
-        QSettings setting(":/settings/themes.json", JsonFormat);
-
+        QSettings setting = QsettingsJSONwrapper::open();
         setting.beginGroup(name);
 
         // Editor font

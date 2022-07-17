@@ -21,6 +21,7 @@ SOURCES += \
     src/linenumberarea.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/qsettingsjsonwrapper.cpp \
     src/settings.cpp
 
 HEADERS += \
@@ -42,6 +43,7 @@ HEADERS += \
     src/highlighter.h \
     src/linenumberarea.h \
     src/mainwindow.h \
+    src/qsettingsjsonwrapper.h \
     src/settings.h \
     src/qsettings_json.hpp
 

@@ -18,6 +18,7 @@
 #include "Interpreter.h"
 #include "QtAwesome.h"
 #include "settings.h"
+#include "qsettingsjsonwrapper.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
