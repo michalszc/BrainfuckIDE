@@ -24,10 +24,12 @@ public:
     std::vector<QColor> getColors();
     QFont getFont() { return font_; }
     QFont getCommentFont() { return commentFont_; }
+    QString getTheme() { return currentTheme; }
 
 private:
     void setup();
     void addListItem(QString text, QColor color, int character=fa::square);
+    void changeItemColor(QColor color, int index);
 
 private slots:
     void change();

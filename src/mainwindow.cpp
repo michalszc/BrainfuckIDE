@@ -65,10 +65,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::getTheme(const QString name = "custom"){
-    if ( name == "light" || name == "dark" ){
+void MainWindow::getTheme(){
+    if ( currentTheme == "light" || currentTheme == "dark" ){
         QSettings setting = QsettingsJSONwrapper::open();
-        setting.beginGroup(name);
+        setting.beginGroup(currentTheme);
 
         // Editor font
         QFont font = setting.value("editorFont").value<QFont>();
@@ -186,8 +186,8 @@ void MainWindow::getTheme(const QString name = "custom"){
     }
 }
 
-void MainWindow::saveTheme(const QString name = "custom"){
-    if( name != "light" && name != "dark" ){
+void MainWindow::saveTheme(){
+    if( currentTheme != "light" && currentTheme != "dark" ){
         QSettings setting(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
         // Editor font
@@ -256,7 +256,7 @@ void MainWindow::readSettings(){
     }
     QString theme = settings.value("theme").toString();
     currentTheme = (!theme.isEmpty()) ? theme : "dark";
-    getTheme(currentTheme);
+    getTheme();
 }
 
 void MainWindow::writeSettings(){
@@ -563,7 +563,7 @@ void MainWindow::openSettings(){
         codeEditor->highlighter->setLoopColor(colors[11]);
         codeEditor->highlighter->setCommentColor(colors[12]);
         codeEditor->highlighter->rehighlight();
-        currentTheme = "custom";
+        currentTheme = s.getTheme();
         saveTheme();
     }
 }

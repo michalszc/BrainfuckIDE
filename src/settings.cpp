@@ -52,9 +52,17 @@ Settings::~Settings()
     delete ui;
 }
 
+void Settings::changeItemColor(QColor color, int index){
+    QVariantMap options;
+    options.insert( "color" , color );
+    list->item(index)->setIcon(awesome->icon(fa::square, options).pixmap(256,256));
+    list->item(index)->setText(listItems[index-2].first.split(':')[0]+": "+color.name());
+    listItems[index-2].second = color;
+}
+
 void Settings::changeTheme(){
     if (themes->currentItem() == nullptr) return;
-    QString currentItem =  themes->currentItem()->text();
+    currentTheme =  themes->currentItem()->text();
     QFont editorFont;
     QFont commentFont;
     QColor backgroundColor;
@@ -72,9 +80,9 @@ void Settings::changeTheme(){
     QColor commentColor;
 
     // load theme
-    if ( currentItem == "light" || currentItem == "dark" ){
+    if ( currentTheme == "light" || currentTheme == "dark" ){
         QSettings setting = QsettingsJSONwrapper::open();
-        setting.beginGroup(currentItem);
+        setting.beginGroup(currentTheme);
 
         // Editor font
         editorFont = setting.value("editorFont").value<QFont>();
@@ -202,10 +210,29 @@ void Settings::changeTheme(){
 
         codeEditor->highlighter->rehighlight();
     }
+    list->item(0)->setText("Font:  "+editorFont.family());
+    list->item(1)->setText("Comment Font:  "+commentFont.family());
+    changeItemColor(backgroundColor,2);
+    changeItemColor(editorBackgroundColor,3);
+    changeItemColor(editorSidebarColor,4);
+    changeItemColor(editorLineNumbersColor,5);
+    changeItemColor(editorCurrentLineColor,6);
+    changeItemColor(input_outputBackgroundColor,7);
+    changeItemColor(input_outputTextColor,8);
+    changeItemColor(movingPointerColor,9);
+    changeItemColor(readColor,10);
+    changeItemColor(inputColor,11);
+    changeItemColor(changeValueColor,12);
+    changeItemColor(loopColor,13);
+    changeItemColor(commentColor,14);
 }
 
 void Settings::change(){
-  if ( list->currentItem() == nullptr ) return;
+  if (list->currentItem() == nullptr) return;
+  if (currentTheme == "dark" ||  currentTheme == "light"){
+        currentTheme = "custom";
+        themes->setCurrentItem(themes->item(2));
+  }
   QString currentItem =  list->currentItem()->text();
   QString itemType = currentItem.mid(0,currentItem.lastIndexOf(":"));
   QString itemValue = currentItem.mid(currentItem.lastIndexOf(":")+1).replace(" ", "");

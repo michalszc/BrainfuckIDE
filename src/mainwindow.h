@@ -48,8 +48,8 @@ private:
     void setCurrentFile(const QString &fileName);
     void readSettings();
     void writeSettings();
-    void getTheme(const QString name);
-    void saveTheme(const QString name);
+    void getTheme();
+    void saveTheme();
 
 private slots:
     void newFile();
