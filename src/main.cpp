@@ -19,23 +19,22 @@ int main(int argc, char *argv[])
     "It's perfect for anybody who just wants to quickly write and run some code on their computer."));
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument("filename", QCoreApplication::translate("main", "File to open.(default is untiled.bf)"));
 
-    QCommandLineOption codeOption(QStringList() << "c" << "code",  QCoreApplication::translate("main", "Set code."), QCoreApplication::translate("main", "code"), "+-[]<>,.");
-    parser.addOption(codeOption);
+    QCommandLineOption fileOption(QStringList() << "f" << "file",  QCoreApplication::translate("main", "File to open."), QCoreApplication::translate("main", "filename"));
+    parser.addOption(fileOption);
 
     QCommandLineOption themeOption(QStringList() << "t" << "theme",  QCoreApplication::translate("main", "Change theme, possible options: light, dark and custom (default is dark)."), QCoreApplication::translate("main", "theme"), settings.value("theme").toString());
     parser.addOption(themeOption);
 
+    QCommandLineOption codeOption(QStringList() << "c" << "code",  QCoreApplication::translate("main", "Set code."), QCoreApplication::translate("main", "code"), "+-[]<>,.");
+    parser.addOption(codeOption);
+
     parser.process(app);
 
-    const QStringList args = parser.positionalArguments();
-
-    QString fileName = (args.size() == 1) ? args.at(0) : "untitled.bf";
-
-    qDebug() << "filename:  " << fileName;
-    qDebug() << "code: " << parser.value(codeOption);
-    qDebug() << "theme: " << parser.value(themeOption);
+    QString file = parser.value(fileOption);
+    if(!file.isEmpty() && QFile::exists(file) && file.endsWith(".bf")){
+        settings.setValue("file", QFileInfo(file).absoluteFilePath());
+    }
 
     QString theme = parser.value(themeOption);
     if(!theme.isEmpty()){
@@ -45,7 +44,7 @@ int main(int argc, char *argv[])
             settings.setValue("theme", "custom");
         }
     }else{
-        settings.setValue("theme", "custom");
+        settings.setValue("theme", "dark");
     }
 
     MainWindow w;
