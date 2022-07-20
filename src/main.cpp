@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     QCommandLineOption themeOption(QStringList() << "t" << "theme",  QCoreApplication::translate("main", "Change theme, possible options: light, dark and custom (default is dark)."), QCoreApplication::translate("main", "theme"), settings.value("theme").toString());
     parser.addOption(themeOption);
 
-    QCommandLineOption codeOption(QStringList() << "c" << "code",  QCoreApplication::translate("main", "Set code."), QCoreApplication::translate("main", "code"), "+-[]<>,.");
+    QCommandLineOption codeOption(QStringList() << "c" << "code",  QCoreApplication::translate("main", "Set code(Only if file is not set)."), QCoreApplication::translate("main", "code"));
     parser.addOption(codeOption);
 
     parser.process(app);
@@ -45,6 +45,12 @@ int main(int argc, char *argv[])
         }
     }else{
         settings.setValue("theme", "dark");
+    }
+
+    QString code = parser.value(codeOption);
+    if(!code.isEmpty() && !parser.isSet("file")){
+        settings.setValue("code", code);
+        settings.setValue("file", QString());
     }
 
     MainWindow w;

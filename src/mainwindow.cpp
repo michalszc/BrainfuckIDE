@@ -251,6 +251,11 @@ void MainWindow::readSettings(){
     QString fileName = settings.value("file").toString();
     if(fileName.isEmpty()){
         setCurrentFile(QString());
+        QString code = settings.value("code").toString();
+        if(!code.isEmpty()){
+            codeEditor->document()->setPlainText(code);
+            settings.setValue("code", QString());
+        }
     }else{
         loadFile(fileName);
     }
