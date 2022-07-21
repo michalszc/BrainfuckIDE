@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void runCode() { run(); }
 
 protected:
     void closeEvent(QCloseEvent *event) override;

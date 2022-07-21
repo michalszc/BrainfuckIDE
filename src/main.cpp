@@ -23,11 +23,14 @@ int main(int argc, char *argv[])
     QCommandLineOption fileOption(QStringList() << "f" << "file",  QCoreApplication::translate("main", "File to open(only with .bf extension)."), QCoreApplication::translate("main", "filename"));
     parser.addOption(fileOption);
 
-    QCommandLineOption themeOption(QStringList() << "t" << "theme",  QCoreApplication::translate("main", "Change theme, possible options: light, dark and custom (default is dark)."), QCoreApplication::translate("main", "theme"), settings.value("theme").toString());
+    QCommandLineOption themeOption(QStringList() << "t" << "theme",  QCoreApplication::translate("main", "Change theme, possible options: light, dark and custom(default is dark)."), QCoreApplication::translate("main", "theme"), settings.value("theme").toString());
     parser.addOption(themeOption);
 
     QCommandLineOption codeOption(QStringList() << "c" << "code",  QCoreApplication::translate("main", "Set code(Only if file is not set)."), QCoreApplication::translate("main", "code"));
     parser.addOption(codeOption);
+
+    QCommandLineOption runOption(QStringList() << "r" << "run",  QCoreApplication::translate("main", "Run code."));
+    parser.addOption(runOption);
 
     parser.process(app);
 
@@ -55,5 +58,9 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
+
+    if(parser.isSet("run"))
+        w.runCode();
+
     return app.exec();
 }
