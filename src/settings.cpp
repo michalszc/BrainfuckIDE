@@ -148,7 +148,11 @@ void Settings::changeTheme(){
         setting.endGroup();
     }else{
         QSettings setting(QCoreApplication::organizationName(), QCoreApplication::applicationName());
-
+        if(!setting.contains("editorFont")){
+            themes->setCurrentItem(themes->item(1));
+            changeTheme();
+            return;
+        }
         // Editor font
         editorFont = setting.value("editorFont").value<QFont>();
         codeEditor->setFont(editorFont);

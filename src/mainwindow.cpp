@@ -128,7 +128,11 @@ void MainWindow::getTheme(){
         setting.endGroup();
     }else{
         QSettings setting(QCoreApplication::organizationName(), QCoreApplication::applicationName());
-
+        if(!setting.contains("editorFont")){
+            currentTheme = "dark";
+            getTheme();
+            return;
+        }
         // Editor font
         QFont font = setting.value("editorFont").value<QFont>();
         codeEditor->setFont(font);
