@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("QtProject");
     QCoreApplication::setApplicationName("BrainfuckIDE");
-    QCoreApplication::setApplicationVersion("1.0.0");
+    QCoreApplication::setApplicationVersion("1.0.1");
 
     QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
