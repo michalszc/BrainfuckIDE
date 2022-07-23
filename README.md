@@ -33,6 +33,11 @@ _An intuitive, featureful and visually appealing Brainfuck IDE built in C++ usin
 - Syntax highlighting
 - Code examples
 - Themes dark, light and custom one
+- Command line options:
+  -  `-f <filename>` or `--file <filename>` - File to open(only with .bf extension)
+  -  `-t <theme>` or `--theme <theme>` - Change theme, possible options: light, dark and custom(default is dark)
+  -  `-c <code>` or `--code <code>` - Set code(Only if file is not set)
+  -  `-r` or `--run` - Run code
 
 ## Used in the project
 - Example codes from [Brainfuck.org](http://brainfuck.org/)
